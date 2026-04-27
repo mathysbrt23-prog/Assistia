@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion, type Variants } from "framer-motion";
 import {
@@ -8,13 +9,11 @@ import {
   Check,
   CheckCircle2,
   ChevronLeft,
-  MessageCircle,
   Mic,
   MoreVertical,
   Plus,
   ShieldCheck,
   Signal,
-  Sparkles,
   Wifi
 } from "lucide-react";
 
@@ -118,6 +117,18 @@ function WhatsAppLogo({ className = "h-5 w-5" }: { className?: string }) {
   );
 }
 
+function AssistiaLogo({ className }: { className: string }) {
+  return (
+    <Image
+      alt="Assistia"
+      className={`${className} object-cover`}
+      height={96}
+      src="/assistia-logo.png"
+      width={96}
+    />
+  );
+}
+
 function PrimaryLink({
   children,
   href,
@@ -189,9 +200,7 @@ function WhatsAppBubble({ from, text }: { from: string; text: string }) {
       }}
     >
       {!isUser ? (
-        <div className="mb-1 grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-[#8C7DFF]/30 bg-[#141923] shadow-[0_0_18px_rgba(140,125,255,0.22)]">
-          <Sparkles className="h-4 w-4 text-[#A895FF]" aria-hidden="true" />
-        </div>
+        <AssistiaLogo className="mb-1 h-9 w-9 shrink-0 rounded-xl border border-white/10 bg-black shadow-[0_0_18px_rgba(255,255,255,0.12)]" />
       ) : null}
       <div
         className={`max-w-[83%] whitespace-pre-line rounded-[19px] px-4 py-3 text-[15px] leading-6 shadow-[0_12px_30px_rgba(0,0,0,0.22)] ${
@@ -246,9 +255,7 @@ function PhoneMockup() {
                   <ChevronLeft className="h-6 w-6" aria-hidden="true" />
                   <span className="text-sm font-semibold">12</span>
                 </div>
-                <div className="grid h-10 w-10 place-items-center rounded-xl bg-[linear-gradient(135deg,#B79CFF,#5D55F6)] text-white shadow-[0_0_18px_rgba(141,116,255,0.38)]">
-                  <Sparkles className="h-5 w-5" aria-hidden="true" />
-                </div>
+                <AssistiaLogo className="h-10 w-10 rounded-xl border border-white/10 bg-black shadow-[0_0_18px_rgba(255,255,255,0.12)]" />
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-1.5">
                     <p className="truncate text-xl font-semibold text-white">Assistia</p>
@@ -260,7 +267,7 @@ function PhoneMockup() {
               </div>
 
               <motion.div
-                className="relative z-10 flex flex-1 flex-col justify-end gap-5 px-4 pb-20"
+                className="relative z-10 flex flex-1 flex-col gap-4 px-4 pb-28 pt-5"
                 initial="hidden"
                 variants={stagger}
                 viewport={{ once: true }}
@@ -326,9 +333,7 @@ export default function LandingPage() {
       <header className="fixed left-0 right-0 top-0 z-50 border-b border-white/8 bg-black/70 backdrop-blur-2xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
           <Link className="flex items-center gap-2 text-sm font-semibold" href="/">
-            <span className="grid h-8 w-8 place-items-center rounded-full bg-[#25D366] text-black">
-              <MessageCircle className="h-4 w-4" aria-hidden="true" />
-            </span>
+            <AssistiaLogo className="h-8 w-8 rounded-full border border-white/10 bg-black" />
             Assistia
           </Link>
           <nav className="hidden items-center gap-8 text-sm text-zinc-400 md:flex">

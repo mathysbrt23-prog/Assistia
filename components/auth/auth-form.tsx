@@ -73,8 +73,8 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
         </h1>
         <p className="mt-2 text-sm text-zinc-600">
           {isSignup
-            ? "Commence avec email/password, puis connecte Google depuis le dashboard."
-            : "Retrouve ton dashboard WhatsAgent et tes intégrations."}
+            ? "Crée ton compte pour tester Assistia Reply et préparer l’extension."
+            : "Retrouve ton dashboard Assistia Reply, ton usage et tes préférences."}
         </p>
       </div>
 

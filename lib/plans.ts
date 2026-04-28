@@ -1,66 +1,72 @@
-export type PlanId = "starter" | "pro" | "business";
+export type PlanId = "free" | "pro" | "business";
 
 export const plans: Array<{
   id: PlanId;
   name: string;
   price: string;
-  monthlyMessages: number;
+  monthlyReplies: number;
   description: string;
-  priceEnv: string;
+  priceEnv?: string;
   features: string[];
 }> = [
   {
-    id: "starter",
-    name: "Starter",
-    price: "19€",
-    monthlyMessages: 200,
-    description: "Pour tester l’assistant sur les demandes personnelles.",
-    priceEnv: "STRIPE_PRICE_STARTER",
-    features: ["200 messages WhatsApp / mois", "Résumé Gmail", "Consultation agenda"]
+    id: "free",
+    name: "Free",
+    price: "0€",
+    monthlyReplies: 20,
+    description: "Pour tester Assistia sur quelques réponses.",
+    features: ["20 réponses / mois", "Gmail ou WhatsApp Web", "Tons pro, court, chaleureux"]
   },
   {
     id: "pro",
     name: "Pro",
-    price: "49€",
-    monthlyMessages: 1000,
-    description: "Pour utiliser WhatsAgent au quotidien.",
+    price: "9€",
+    monthlyReplies: 1000,
+    description: "Pour répondre vite et bien tous les jours.",
     priceEnv: "STRIPE_PRICE_PRO",
     features: [
-      "1 000 messages WhatsApp / mois",
-      "Gmail + Calendar complet",
-      "Modification de rendez-vous avec confirmation",
-      "Historique des demandes"
+      "1 000 réponses / mois",
+      "Gmail + WhatsApp Web",
+      "Templates relance, prix, refus, SAV",
+      "Préférences de ton"
     ]
   },
   {
     id: "business",
     name: "Business",
-    price: "99€",
-    monthlyMessages: 5000,
-    description: "Pour les équipes et usages plus volumineux.",
+    price: "29€",
+    monthlyReplies: 3000,
+    description: "Pour les petites équipes qui répondent aux clients.",
     priceEnv: "STRIPE_PRICE_BUSINESS",
     features: [
-      "5 000 messages WhatsApp / mois",
-      "Plusieurs utilisateurs",
-      "Support prioritaire",
-      "Paramètres de sécurité avancés"
+      "3 000 réponses / mois",
+      "3 utilisateurs inclus",
+      "Ton de marque partagé",
+      "Historique d’usage sans contenu sensible"
     ]
   }
 ];
+
+export const paidPlans = plans.filter((plan) => plan.id !== "free");
 
 export function getPlan(planId: string | null | undefined) {
   return plans.find((plan) => plan.id === planId);
 }
 
+export function getEffectivePlan(planId: string | null | undefined, active = false) {
+  if (!active) return getPlan("free")!;
+  return getPlan(planId) || getPlan("free")!;
+}
+
 export function getStripePriceId(planId: string) {
   const plan = getPlan(planId);
-  if (!plan) return null;
+  if (!plan?.priceEnv) return null;
   return process.env[plan.priceEnv] || null;
 }
 
 export function getPlanFromStripePrice(priceId?: string | null) {
   if (!priceId) return null;
-  return plans.find((plan) => process.env[plan.priceEnv] === priceId)?.id || null;
+  return plans.find((plan) => plan.priceEnv && process.env[plan.priceEnv] === priceId)?.id || null;
 }
 
 export function isActiveSubscriptionStatus(status?: string | null) {

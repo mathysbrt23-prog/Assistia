@@ -1,21 +1,21 @@
-import { ArrowRight, CalendarDays, CreditCard, MessageCircle } from "lucide-react";
+import { ArrowRight, Chrome, MessageSquareText, PenLine } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
 
 const steps = [
   {
-    icon: CreditCard,
-    title: "Choisis un plan",
-    text: "Stripe active l’accès agent et fixe le volume mensuel de messages."
+    icon: Chrome,
+    title: "Installe l’extension",
+    text: "Assistia Reply démarre dans Chrome, directement dans Gmail puis WhatsApp Web."
   },
   {
-    icon: CalendarDays,
-    title: "Connecte Google",
-    text: "Autorise Gmail en lecture et Calendar avec modification confirmée."
+    icon: MessageSquareText,
+    title: "Écris ton intention",
+    text: "Sélectionne un message ou note ce que tu veux répondre en quelques mots."
   },
   {
-    icon: MessageCircle,
-    title: "Associe WhatsApp",
-    text: "Ajoute ton numéro puis configure le webhook Meta Business."
+    icon: PenLine,
+    title: "Insère le brouillon",
+    text: "Assistia reformule, tu relis, puis tu envoies toi-même depuis l’app d’origine."
   }
 ];
 
@@ -28,9 +28,10 @@ export default function OnboardingPage() {
         </ButtonLink>
         <div className="mt-12 max-w-2xl">
           <p className="text-sm font-bold uppercase text-moss">Onboarding</p>
-          <h1 className="mt-3 text-4xl font-bold md:text-5xl">Active WhatsAgent en 3 étapes.</h1>
+          <h1 className="mt-3 text-4xl font-bold md:text-5xl">Active Assistia Reply en 3 étapes.</h1>
           <p className="mt-4 text-zinc-700">
-            Une fois ces étapes terminées, tu peux envoyer “J’ai quoi aujourd’hui ?” depuis WhatsApp.
+            Le MVP ne remplace pas Gmail ou WhatsApp Web. Il ajoute simplement le bon brouillon au
+            bon endroit, sans envoi automatique.
           </p>
         </div>
         <div className="mt-10 grid gap-4 md:grid-cols-3">
@@ -44,7 +45,7 @@ export default function OnboardingPage() {
         </div>
         <div className="mt-8">
           <ButtonLink href="/dashboard">
-            Configurer maintenant
+            Ouvrir le dashboard
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </ButtonLink>
         </div>

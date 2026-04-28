@@ -5,7 +5,8 @@ import { ApiAuthError, requireApiUser, unauthorizedResponse } from "@/lib/auth";
 export const runtime = "nodejs";
 
 const schema = z.object({
-  requireConfirmations: z.boolean(),
+  defaultTone: z.enum(["professionnel", "court", "chaleureux", "ferme", "commercial"]),
+  defaultLanguage: z.enum(["fr", "en", "es"]),
   dataRetentionDays: z.union([z.literal(30), z.literal(90), z.literal(180), z.literal(365)])
 });
 
@@ -17,18 +18,19 @@ export async function POST(request: Request) {
     await supabase
       .from("users_profiles")
       .update({
-        require_confirmations: body.requireConfirmations,
+        default_tone: body.defaultTone,
+        default_language: body.defaultLanguage,
         data_retention_days: body.dataRetentionDays,
         updated_at: new Date().toISOString()
       })
       .eq("id", user.id);
 
-    return NextResponse.json({ message: "Réglages sauvegardés." });
+    return NextResponse.json({ message: "Préférences sauvegardées." });
   } catch (error) {
     if (error instanceof ApiAuthError) return unauthorizedResponse();
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: "Réglages invalides." }, { status: 400 });
+      return NextResponse.json({ error: "Préférences invalides." }, { status: 400 });
     }
-    return NextResponse.json({ error: "Impossible de sauvegarder les réglages." }, { status: 500 });
+    return NextResponse.json({ error: "Impossible de sauvegarder les préférences." }, { status: 500 });
   }
 }

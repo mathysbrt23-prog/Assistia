@@ -7,7 +7,7 @@ export default function PricingPage() {
       <div className="mx-auto max-w-7xl">
         <div className="mb-10 flex items-center justify-between gap-4">
           <ButtonLink href="/" variant="ghost">
-            WhatsAgent
+            Assistia
           </ButtonLink>
           <ButtonLink href="/login" variant="secondary">
             Connexion
@@ -16,11 +16,11 @@ export default function PricingPage() {
         <div className="max-w-2xl">
           <p className="text-sm font-bold uppercase text-moss">Pricing</p>
           <h1 className="mt-3 text-4xl font-bold md:text-5xl">
-            Choisis ton volume de messages WhatsApp.
+            Choisis ton volume de réponses.
           </h1>
           <p className="mt-4 text-zinc-700">
-            Tous les plans incluent l’accès au dashboard, Supabase Auth, les connexions Google et
-            les confirmations avant action sensible.
+            Tous les plans incluent l’accès au dashboard, aux préférences de ton et au flux de
+            génération Assistia Reply. Le plan gratuit permet de tester avant de passer sur Stripe.
           </p>
         </div>
         <div className="mt-10">

@@ -1,6 +1,7 @@
 "use client";
 
 import { Check, Loader2 } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 import { plans } from "@/lib/plans";
 import { Button } from "@/components/ui/button";
@@ -10,6 +11,7 @@ export function PricingCards() {
   const [error, setError] = useState<string | null>(null);
 
   async function startCheckout(plan: string) {
+    if (plan === "free") return;
     setLoadingPlan(plan);
     setError(null);
 
@@ -62,12 +64,17 @@ export function PricingCards() {
           <Button
             className="mt-7 w-full"
             onClick={() => startCheckout(plan.id)}
-            disabled={loadingPlan !== null}
+            disabled={loadingPlan !== null || plan.id === "free"}
             variant={plan.id === "pro" ? "primary" : "secondary"}
           >
             {loadingPlan === plan.id ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-            Choisir {plan.name}
+            {plan.id === "free" ? "Inclus" : `Choisir ${plan.name}`}
           </Button>
+          {plan.id === "free" ? (
+            <Link className="mt-3 text-center text-sm font-semibold text-moss" href="/signup">
+              Créer un compte gratuit
+            </Link>
+          ) : null}
         </article>
       ))}
       {error ? (

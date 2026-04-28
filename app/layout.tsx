@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Assistia - Assistant personnel WhatsApp",
+  title: "Assistia Reply - Réponses professionnelles dans Gmail et WhatsApp Web",
   description:
-    "Résume tes emails, consulte ton agenda et décale tes réunions directement depuis WhatsApp."
+    "Génère ou reformule des réponses professionnelles en français directement dans Gmail et WhatsApp Web."
 };
 
 export default function RootLayout({

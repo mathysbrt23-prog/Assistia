@@ -6,5 +6,7 @@ node_modules
 out
 coverage
 *.log
+__pycache__/
+*.pyc
 vercel
 .vercel

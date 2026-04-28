@@ -1,21 +1,12 @@
 "use client";
 
-import { CalendarPlus, CreditCard, Loader2, LogOut, MessageCircle, Save } from "lucide-react";
+import { CreditCard, Loader2, LogOut, Save } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Field, SelectField } from "@/components/ui/field";
-import { plans } from "@/lib/plans";
+import { SelectField } from "@/components/ui/field";
+import { paidPlans } from "@/lib/plans";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
-
-export function GoogleConnectButton() {
-  return (
-    <Button onClick={() => (window.location.href = "/api/google/connect")} variant="secondary">
-      <CalendarPlus className="h-4 w-4" aria-hidden="true" />
-      Connecter Google
-    </Button>
-  );
-}
 
 export function StripePlanButtons({ currentPlan }: { currentPlan?: string | null }) {
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
@@ -54,8 +45,8 @@ export function StripePlanButtons({ currentPlan }: { currentPlan?: string | null
 
   return (
     <div className="grid gap-3">
-      <div className="grid gap-2 sm:grid-cols-3">
-        {plans.map((plan) => (
+      <div className="grid gap-2 sm:grid-cols-2">
+        {paidPlans.map((plan) => (
           <Button
             disabled={loadingPlan !== null}
             key={plan.id}
@@ -63,7 +54,7 @@ export function StripePlanButtons({ currentPlan }: { currentPlan?: string | null
             variant={currentPlan === plan.id ? "primary" : "secondary"}
           >
             {loadingPlan === plan.id ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-            {currentPlan === plan.id ? "Plan actuel" : plan.name}
+            {currentPlan === plan.id ? "Plan actuel" : `${plan.name} - ${plan.price}/mois`}
           </Button>
         ))}
       </div>
@@ -76,50 +67,13 @@ export function StripePlanButtons({ currentPlan }: { currentPlan?: string | null
   );
 }
 
-export function WhatsAppConnectForm({ initialPhone }: { initialPhone?: string | null }) {
-  const [status, setStatus] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-
-  async function onSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setLoading(true);
-    setStatus(null);
-    const formData = new FormData(event.currentTarget);
-    const phoneNumber = String(formData.get("phoneNumber") || "");
-    const response = await fetch("/api/whatsapp/connect", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ phoneNumber })
-    });
-    const payload = (await response.json().catch(() => null)) as { error?: string; message?: string } | null;
-    setStatus(payload?.message || payload?.error || "Mise à jour effectuée.");
-    setLoading(false);
-  }
-
-  return (
-    <form className="grid gap-3" onSubmit={onSubmit}>
-      <Field
-        defaultValue={initialPhone || ""}
-        help="Format recommandé : indicatif pays puis numéro, par exemple 33612345678."
-        label="Numéro WhatsApp autorisé"
-        name="phoneNumber"
-        placeholder="33612345678"
-        required
-      />
-      <Button disabled={loading} type="submit" variant="secondary">
-        {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <MessageCircle className="h-4 w-4" />}
-        Enregistrer le numéro
-      </Button>
-      {status ? <p className="text-sm text-zinc-600">{status}</p> : null}
-    </form>
-  );
-}
-
-export function SecuritySettingsForm({
-  requireConfirmations,
+export function ReplyPreferencesForm({
+  defaultTone,
+  defaultLanguage,
   dataRetentionDays
 }: {
-  requireConfirmations?: boolean | null;
+  defaultTone?: string | null;
+  defaultLanguage?: string | null;
   dataRetentionDays?: number | null;
 }) {
   const [status, setStatus] = useState<string | null>(null);
@@ -130,36 +84,37 @@ export function SecuritySettingsForm({
     setLoading(true);
     setStatus(null);
     const formData = new FormData(event.currentTarget);
-    const response = await fetch("/api/settings/security", {
+    const response = await fetch("/api/settings/preferences", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        requireConfirmations: formData.get("requireConfirmations") === "on",
+        defaultTone: String(formData.get("defaultTone") || "professionnel"),
+        defaultLanguage: String(formData.get("defaultLanguage") || "fr"),
         dataRetentionDays: Number(formData.get("dataRetentionDays"))
       })
     });
     const payload = (await response.json().catch(() => null)) as { error?: string; message?: string } | null;
-    setStatus(payload?.message || payload?.error || "Réglages sauvegardés.");
+    setStatus(payload?.message || payload?.error || "Préférences sauvegardées.");
     setLoading(false);
   }
 
   return (
     <form className="grid gap-4" onSubmit={onSubmit}>
-      <label className="flex items-start gap-3 text-sm text-zinc-700">
-        <input
-          className="mt-1 h-4 w-4 accent-leaf"
-          defaultChecked={requireConfirmations ?? true}
-          name="requireConfirmations"
-          type="checkbox"
-        />
-        <span>
-          <span className="block font-semibold text-ink">Confirmation obligatoire</span>
-          Toutes les modifications Calendar et envois externes attendent un OUI explicite.
-        </span>
-      </label>
+      <SelectField defaultValue={defaultTone || "professionnel"} label="Ton par défaut" name="defaultTone">
+        <option value="professionnel">Professionnel</option>
+        <option value="court">Court</option>
+        <option value="chaleureux">Chaleureux</option>
+        <option value="ferme">Ferme</option>
+        <option value="commercial">Commercial</option>
+      </SelectField>
+      <SelectField defaultValue={defaultLanguage || "fr"} label="Langue par défaut" name="defaultLanguage">
+        <option value="fr">Français</option>
+        <option value="en">Anglais</option>
+        <option value="es">Espagnol</option>
+      </SelectField>
       <SelectField
-        defaultValue={String(dataRetentionDays || 90)}
-        label="Rétention des logs"
+        defaultValue={String(dataRetentionDays || 30)}
+        label="Rétention des historiques"
         name="dataRetentionDays"
       >
         <option value="30">30 jours</option>

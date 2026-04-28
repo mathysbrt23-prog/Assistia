@@ -1,0 +1,134 @@
+.assistia-reply-trigger {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 2147483647;
+  height: 48px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  padding: 0 16px;
+  background: #050505;
+  color: #fff;
+  box-shadow: 0 18px 55px rgba(0, 0, 0, 0.35);
+  font: 700 13px/1 Arial, Helvetica, sans-serif;
+  cursor: pointer;
+}
+
+.assistia-reply-trigger span {
+  color: #25d366;
+}
+
+.assistia-reply-panel {
+  position: fixed;
+  right: 22px;
+  bottom: 84px;
+  z-index: 2147483647;
+  width: min(390px, calc(100vw - 28px));
+  border: 1px solid rgba(37, 211, 102, 0.32);
+  border-radius: 18px;
+  background: rgba(8, 10, 11, 0.98);
+  color: #fff;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.48);
+  overflow: hidden;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.assistia-reply-panel[hidden] {
+  display: none;
+}
+
+.assistia-reply-head,
+.assistia-reply-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px;
+}
+
+.assistia-reply-head {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.assistia-reply-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.assistia-reply-subtitle {
+  margin: 3px 0 0;
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 12px;
+}
+
+.assistia-reply-close {
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.64);
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.assistia-reply-body {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+}
+
+.assistia-reply-body textarea,
+.assistia-reply-body select {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  font: 13px/1.5 Arial, Helvetica, sans-serif;
+}
+
+.assistia-reply-body textarea {
+  min-height: 92px;
+  resize: vertical;
+  padding: 11px;
+}
+
+.assistia-reply-body select {
+  height: 38px;
+  padding: 0 10px;
+}
+
+.assistia-reply-output {
+  min-height: 86px;
+  max-height: 190px;
+  overflow: auto;
+  border-radius: 12px;
+  background: rgba(37, 211, 102, 0.09);
+  color: rgba(255, 255, 255, 0.9);
+  padding: 12px;
+  font-size: 13px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+.assistia-reply-actions {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.assistia-reply-actions button {
+  height: 38px;
+  border: 0;
+  border-radius: 999px;
+  padding: 0 14px;
+  font: 800 12px/1 Arial, Helvetica, sans-serif;
+  cursor: pointer;
+}
+
+.assistia-reply-primary {
+  background: #fff;
+  color: #000;
+}
+
+.assistia-reply-secondary {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}

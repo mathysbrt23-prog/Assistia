@@ -1,34 +1,29 @@
 import { redirect } from "next/navigation";
 import {
   AlertTriangle,
-  Bot,
-  CalendarDays,
   CheckCircle2,
+  Chrome,
+  CreditCard,
   History,
   KeyRound,
-  Mail,
-  MessageCircle,
-  ShieldCheck
+  MessageSquareText,
+  PenLine,
+  ShieldCheck,
+  Sparkles
 } from "lucide-react";
 import {
-  GoogleConnectButton,
-  SecuritySettingsForm,
+  ReplyPreferencesForm,
   SignOutButton,
-  StripePlanButtons,
-  WhatsAppConnectForm
+  StripePlanButtons
 } from "@/components/dashboard/dashboard-actions";
-import { getPlan, isActiveSubscriptionStatus } from "@/lib/plans";
+import { getEffectivePlan, getPlan, isActiveSubscriptionStatus } from "@/lib/plans";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { formatDateTime } from "@/lib/utils";
+import { compactText, formatDateTime } from "@/lib/utils";
 
 type DashboardRow = Record<string, string | number | boolean | null | undefined>;
 
 function asString(value: unknown) {
   return typeof value === "string" ? value : null;
-}
-
-function asBoolean(value: unknown) {
-  return typeof value === "boolean" ? value : false;
 }
 
 function asNumber(value: unknown) {
@@ -84,13 +79,16 @@ export default async function DashboardPage() {
     full_name: user.user_metadata?.full_name || user.user_metadata?.name || null
   });
 
+  const monthStart = new Date();
+  monthStart.setUTCDate(1);
+  monthStart.setUTCHours(0, 0, 0, 0);
+
   const [
     profileResult,
     subscriptionResult,
-    googleResult,
-    whatsappResult,
-    messagesResult,
-    requestsResult,
+    usageResult,
+    recentRepliesResult,
+    extensionResult,
     logsResult
   ] = await Promise.all([
     supabase.from("users_profiles").select("*").eq("id", user.id).single(),
@@ -101,22 +99,26 @@ export default async function DashboardPage() {
       .order("created_at", { ascending: false })
       .limit(1)
       .maybeSingle(),
-    supabase.from("google_connections").select("*").eq("user_id", user.id).maybeSingle(),
-    supabase.from("whatsapp_connections").select("*").eq("user_id", user.id).maybeSingle(),
     supabase
-      .from("whatsapp_messages")
+      .from("reply_requests")
+      .select("id", { count: "exact", head: true })
+      .eq("user_id", user.id)
+      .gte("created_at", monthStart.toISOString()),
+    supabase
+      .from("reply_requests")
       .select("*")
       .eq("user_id", user.id)
       .order("created_at", { ascending: false })
       .limit(8),
     supabase
-      .from("agent_requests")
+      .from("extension_installations")
       .select("*")
       .eq("user_id", user.id)
-      .order("created_at", { ascending: false })
-      .limit(8),
+      .order("last_seen_at", { ascending: false })
+      .limit(1)
+      .maybeSingle(),
     supabase
-      .from("action_logs")
+      .from("usage_events")
       .select("*")
       .eq("user_id", user.id)
       .order("created_at", { ascending: false })
@@ -125,25 +127,23 @@ export default async function DashboardPage() {
 
   const profile = profileResult.data as DashboardRow | null;
   const subscription = subscriptionResult.data as DashboardRow | null;
-  const googleConnection = googleResult.data as DashboardRow | null;
-  const whatsappConnection = whatsappResult.data as DashboardRow | null;
-  const messages = (messagesResult.data || []) as DashboardRow[];
-  const requests = (requestsResult.data || []) as DashboardRow[];
-  const logs = (logsResult.data || []) as DashboardRow[];
+  const recentReplies = (recentRepliesResult.data || []) as DashboardRow[];
+  const usageEvents = (logsResult.data || []) as DashboardRow[];
+  const extension = extensionResult.data as DashboardRow | null;
   const subscriptionPlan = asString(subscription?.plan);
   const subscriptionStatus = asString(subscription?.status);
-  const plan = getPlan(subscriptionPlan);
   const hasActiveSubscription = isActiveSubscriptionStatus(subscriptionStatus);
-  const googleGmailConnected = asBoolean(googleConnection?.gmail_connected);
-  const googleCalendarConnected = asBoolean(googleConnection?.calendar_connected);
-  const whatsappStatus = asString(whatsappConnection?.status);
+  const plan = getEffectivePlan(subscriptionPlan, hasActiveSubscription);
+  const paidPlan = getPlan(subscriptionPlan);
+  const usageCount = usageResult.count || 0;
+  const remaining = Math.max(0, plan.monthlyReplies - usageCount);
 
   return (
     <main className="min-h-screen bg-fog text-ink">
       <header className="border-b border-line bg-white">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-5 py-5 md:flex-row md:items-center md:justify-between">
           <div>
-            <p className="text-sm font-bold uppercase text-moss">WhatsAgent</p>
+            <p className="text-sm font-bold uppercase text-moss">Assistia Reply</p>
             <h1 className="mt-1 text-3xl font-bold">Dashboard</h1>
             <p className="mt-1 text-sm text-zinc-600">{user.email}</p>
           </div>
@@ -153,17 +153,14 @@ export default async function DashboardPage() {
 
       <div className="mx-auto grid max-w-7xl gap-5 px-5 py-8 lg:grid-cols-[0.75fr_1.25fr]">
         <div className="grid content-start gap-5">
-          <Panel icon={KeyRound} title="Abonnement Stripe">
+          <Panel icon={KeyRound} title="Abonnement">
             <div className="grid gap-4">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
-                  <p className="text-sm text-zinc-600">Statut</p>
-                  <p className="text-xl font-bold">{plan?.name || "Aucun plan"}</p>
+                  <p className="text-sm text-zinc-600">Plan actuel</p>
+                  <p className="text-xl font-bold">{hasActiveSubscription ? paidPlan?.name || plan.name : "Free"}</p>
                 </div>
-                <StatusPill
-                  ok={hasActiveSubscription}
-                  label={hasActiveSubscription ? "Actif" : "Accès agent bloqué"}
-                />
+                <StatusPill ok={hasActiveSubscription} label={hasActiveSubscription ? "Payant actif" : "Gratuit"} />
               </div>
               {asString(subscription?.current_period_end) ? (
                 <p className="text-sm text-zinc-600">
@@ -174,10 +171,11 @@ export default async function DashboardPage() {
             </div>
           </Panel>
 
-          <Panel icon={ShieldCheck} title="Réglages de sécurité">
-            <SecuritySettingsForm
+          <Panel icon={Sparkles} title="Préférences de réponse">
+            <ReplyPreferencesForm
               dataRetentionDays={asNumber(profile?.data_retention_days)}
-              requireConfirmations={asBoolean(profile?.require_confirmations)}
+              defaultLanguage={asString(profile?.default_language)}
+              defaultTone={asString(profile?.default_tone)}
             />
           </Panel>
         </div>
@@ -185,102 +183,90 @@ export default async function DashboardPage() {
         <div className="grid gap-5">
           <section className="grid gap-4 md:grid-cols-3">
             <div className="rounded-lg border border-line bg-white p-5 shadow-sm">
-              <Mail className="h-6 w-6 text-moss" />
-              <p className="mt-4 text-sm text-zinc-600">Gmail</p>
-              <StatusPill ok={googleGmailConnected} label={googleGmailConnected ? "Connecté" : "À connecter"} />
+              <MessageSquareText className="h-6 w-6 text-moss" />
+              <p className="mt-4 text-sm text-zinc-600">Réponses ce mois-ci</p>
+              <p className="mt-1 text-2xl font-bold">
+                {usageCount} / {plan.monthlyReplies}
+              </p>
             </div>
             <div className="rounded-lg border border-line bg-white p-5 shadow-sm">
-              <CalendarDays className="h-6 w-6 text-moss" />
-              <p className="mt-4 text-sm text-zinc-600">Calendar</p>
-              <StatusPill ok={googleCalendarConnected} label={googleCalendarConnected ? "Connecté" : "À connecter"} />
+              <CreditCard className="h-6 w-6 text-moss" />
+              <p className="mt-4 text-sm text-zinc-600">Réponses restantes</p>
+              <p className="mt-1 text-2xl font-bold">{remaining}</p>
             </div>
             <div className="rounded-lg border border-line bg-white p-5 shadow-sm">
-              <MessageCircle className="h-6 w-6 text-moss" />
-              <p className="mt-4 text-sm text-zinc-600">WhatsApp</p>
-              <StatusPill ok={whatsappStatus === "active"} label={whatsappStatus === "active" ? "Connecté" : "À configurer"} />
+              <Chrome className="h-6 w-6 text-moss" />
+              <p className="mt-4 text-sm text-zinc-600">Extension Chrome</p>
+              <StatusPill ok={Boolean(extension)} label={extension ? "Vue récemment" : "À installer"} />
             </div>
           </section>
 
           <div className="grid gap-5 xl:grid-cols-2">
-            <Panel icon={CalendarDays} title="Google OAuth">
-              <div className="grid gap-3 text-sm text-zinc-600">
+            <Panel icon={Chrome} title="Installer l’extension">
+              <div className="grid gap-3 text-sm leading-6 text-zinc-600">
                 <p>
-                  Scopes : lecture Gmail, lecture Calendar et modification Calendar uniquement
-                  après confirmation.
+                  Le MVP d’Assistia Reply démarre comme une extension Chrome qui ajoute un bouton
+                  Assistia dans Gmail, puis WhatsApp Web.
                 </p>
-                <GoogleConnectButton />
-                {asString(googleConnection?.last_connected_at) ? (
-                  <p>Dernière connexion : {formatDateTime(asString(googleConnection?.last_connected_at))}</p>
+                <ol className="grid gap-2">
+                  <li>1. Installer l’extension locale depuis le dossier `extension/`.</li>
+                  <li>2. Se connecter avec ce compte Assistia.</li>
+                  <li>3. Générer ou reformuler un brouillon sans auto-send.</li>
+                </ol>
+                {extension?.last_seen_at ? (
+                  <p>Dernière activité extension : {formatDateTime(asString(extension.last_seen_at))}</p>
                 ) : null}
               </div>
             </Panel>
 
-            <Panel icon={MessageCircle} title="WhatsApp Business">
-              <div className="grid gap-4">
-                <WhatsAppConnectForm initialPhone={asString(whatsappConnection?.phone_number)} />
-                <p className="text-sm text-zinc-600">
-                  Configure ensuite le webhook Meta sur{" "}
-                  <code className="rounded bg-fog px-1 py-0.5">/api/whatsapp/webhook</code>.
+            <Panel icon={ShieldCheck} title="Sécurité">
+              <div className="grid gap-3 text-sm leading-6 text-zinc-600">
+                <p>Assistia ne doit jamais envoyer un message à ta place.</p>
+                <p>
+                  Les historiques stockent un aperçu court et les métadonnées utiles. Le contenu
+                  complet des conversations n’a pas vocation à être conservé.
                 </p>
               </div>
             </Panel>
           </div>
 
-          <Panel icon={History} title="Historique WhatsApp">
+          <Panel icon={History} title="Historique des réponses">
             <div className="grid gap-3">
-              {messages.length ? (
-                messages.map((message, index) => (
-                  <div className="rounded-md border border-line bg-fog p-3 text-sm" key={asString(message.id) || index}>
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="font-bold">{asString(message.direction) === "incoming" ? "Entrant" : "Sortant"}</span>
-                      <span className="text-xs text-zinc-500">{formatDateTime(asString(message.created_at))}</span>
+              {recentReplies.length ? (
+                recentReplies.map((reply, index) => (
+                  <div className="rounded-md border border-line bg-fog p-3 text-sm" key={asString(reply.id) || index}>
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      <span className="font-bold">{asString(reply.mode) === "rewrite" ? "Reformulation" : "Génération"}</span>
+                      <span className="text-xs text-zinc-500">{formatDateTime(asString(reply.created_at))}</span>
                     </div>
-                    <p className="mt-2 text-zinc-700">{asString(message.body)}</p>
+                    <p className="mt-2 text-zinc-700">{compactText(asString(reply.instruction) || "", 180)}</p>
+                    <p className="mt-2 rounded bg-white px-3 py-2 text-zinc-700">
+                      {compactText(asString(reply.generated_reply) || "", 240)}
+                    </p>
                   </div>
                 ))
               ) : (
-                <p className="text-sm text-zinc-600">Aucun message pour le moment.</p>
+                <p className="text-sm text-zinc-600">Aucune réponse générée pour le moment.</p>
               )}
             </div>
           </Panel>
 
-          <div className="grid gap-5 xl:grid-cols-2">
-            <Panel icon={Bot} title="Demandes agent">
-              <div className="grid gap-3">
-                {requests.length ? (
-                  requests.map((request, index) => (
-                    <div className="rounded-md border border-line bg-fog p-3 text-sm" key={asString(request.id) || index}>
-                      <div className="flex items-center justify-between gap-3">
-                        <span className="font-bold">{asString(request.intent) || "Analyse"}</span>
-                        <span className="text-xs text-zinc-500">{asString(request.status)}</span>
-                      </div>
-                      <p className="mt-2 text-zinc-700">{asString(request.input)}</p>
+          <Panel icon={PenLine} title="Activité">
+            <div className="grid gap-3">
+              {usageEvents.length ? (
+                usageEvents.map((event, index) => (
+                  <div className="rounded-md border border-line bg-fog p-3 text-sm" key={asString(event.id) || index}>
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="font-bold">{asString(event.event_type)}</span>
+                      <span className="text-xs text-zinc-500">{formatDateTime(asString(event.created_at))}</span>
                     </div>
-                  ))
-                ) : (
-                  <p className="text-sm text-zinc-600">Aucune demande agent.</p>
-                )}
-              </div>
-            </Panel>
-
-            <Panel icon={ShieldCheck} title="Logs d’actions">
-              <div className="grid gap-3">
-                {logs.length ? (
-                  logs.map((log, index) => (
-                    <div className="rounded-md border border-line bg-fog p-3 text-sm" key={asString(log.id) || index}>
-                      <div className="flex items-center justify-between gap-3">
-                        <span className="font-bold">{asString(log.action_type)}</span>
-                        <span className="text-xs text-zinc-500">{formatDateTime(asString(log.created_at))}</span>
-                      </div>
-                      <p className="mt-2 text-zinc-700">{asString(log.summary)}</p>
-                    </div>
-                  ))
-                ) : (
-                  <p className="text-sm text-zinc-600">Aucun log sensible.</p>
-                )}
-              </div>
-            </Panel>
-          </div>
+                  </div>
+                ))
+              ) : (
+                <p className="text-sm text-zinc-600">Aucune activité enregistrée.</p>
+              )}
+            </div>
+          </Panel>
         </div>
       </div>
     </main>

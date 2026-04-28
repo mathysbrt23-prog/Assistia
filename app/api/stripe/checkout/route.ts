@@ -8,7 +8,7 @@ import { absoluteUrl } from "@/lib/utils";
 export const runtime = "nodejs";
 
 const checkoutSchema = z.object({
-  plan: z.enum(["starter", "pro", "business"])
+  plan: z.enum(["pro", "business"])
 });
 
 export async function POST(request: Request) {

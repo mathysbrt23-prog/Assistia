@@ -86,11 +86,27 @@ create table if not exists public.extension_installations (
   user_id uuid not null references auth.users(id) on delete cascade,
   browser text not null default 'chrome',
   extension_version text,
+  label text not null default 'Chrome local',
+  token_prefix text,
+  install_token_hash text,
+  revoked_at timestamptz,
   last_seen_at timestamptz not null default now(),
   metadata jsonb not null default '{}'::jsonb,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+alter table public.extension_installations
+  add column if not exists label text not null default 'Chrome local';
+
+alter table public.extension_installations
+  add column if not exists token_prefix text;
+
+alter table public.extension_installations
+  add column if not exists install_token_hash text;
+
+alter table public.extension_installations
+  add column if not exists revoked_at timestamptz;
 
 create index if not exists subscriptions_user_id_idx on public.subscriptions(user_id);
 create index if not exists subscriptions_status_idx on public.subscriptions(status);
@@ -103,6 +119,9 @@ create unique index if not exists reply_templates_shared_unique_idx
   where user_id is null;
 create index if not exists extension_installations_user_seen_idx
   on public.extension_installations(user_id, last_seen_at desc);
+create unique index if not exists extension_installations_token_hash_idx
+  on public.extension_installations(install_token_hash)
+  where install_token_hash is not null and revoked_at is null;
 
 drop trigger if exists users_profiles_set_updated_at on public.users_profiles;
 create trigger users_profiles_set_updated_at

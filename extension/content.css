@@ -1,35 +1,58 @@
+.assistia-root,
+.assistia-root * {
+  box-sizing: border-box;
+  letter-spacing: 0;
+}
+
 .assistia-reply-trigger {
   position: fixed;
   right: 22px;
   bottom: 22px;
   z-index: 2147483647;
+  display: inline-flex;
   height: 48px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  align-items: center;
+  gap: 9px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 999px;
-  padding: 0 16px;
+  padding: 0 16px 0 10px;
   background: #050505;
   color: #fff;
   box-shadow: 0 18px 55px rgba(0, 0, 0, 0.35);
-  font: 700 13px/1 Arial, Helvetica, sans-serif;
+  font: 800 13px/1 Arial, Helvetica, sans-serif;
   cursor: pointer;
 }
 
-.assistia-reply-trigger span {
-  color: #25d366;
+.assistia-trigger-mark,
+.assistia-logo {
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: #000;
+  color: #fff;
+  font-weight: 900;
+}
+
+.assistia-trigger-mark {
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(37, 211, 102, 0.5);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.9);
 }
 
 .assistia-reply-panel {
   position: fixed;
-  right: 22px;
-  bottom: 84px;
+  top: 62px;
+  right: 28px;
   z-index: 2147483647;
-  width: min(390px, calc(100vw - 28px));
-  border: 1px solid rgba(37, 211, 102, 0.32);
-  border-radius: 18px;
-  background: rgba(8, 10, 11, 0.98);
-  color: #fff;
-  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.48);
+  width: min(430px, calc(100vw - 32px));
+  max-height: min(860px, calc(100vh - 88px));
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 22px;
+  background: rgba(8, 9, 10, 0.985);
+  color: #fff;
+  box-shadow: 0 32px 100px rgba(0, 0, 0, 0.5);
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -43,83 +66,213 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 14px;
+  padding: 16px;
 }
 
 .assistia-reply-head {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.assistia-brand {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 11px;
+}
+
+.assistia-logo {
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: inset 0 0 0 2px #fff;
+  font-size: 14px;
+}
+
+.assistia-reply-title,
+.assistia-reply-subtitle,
+.assistia-kicker,
+.assistia-context-title,
+.assistia-output-head p {
+  margin: 0;
 }
 
 .assistia-reply-title {
-  margin: 0;
-  font-size: 14px;
-  font-weight: 800;
+  font-size: 15px;
+  font-weight: 900;
 }
 
 .assistia-reply-subtitle {
-  margin: 3px 0 0;
-  color: rgba(255, 255, 255, 0.52);
+  margin-top: 3px;
+  color: rgba(255, 255, 255, 0.54);
   font-size: 12px;
 }
 
 .assistia-reply-close {
+  width: 34px;
+  height: 34px;
   border: 0;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.64);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
   font-size: 20px;
 }
 
+.assistia-context-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 14px 16px 0;
+  border: 1px solid rgba(37, 211, 102, 0.25);
+  border-radius: 16px;
+  background: rgba(37, 211, 102, 0.08);
+  padding: 12px;
+}
+
+.assistia-kicker {
+  color: #25d366;
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.assistia-context-title {
+  margin-top: 4px;
+  max-width: 270px;
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 13px;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.assistia-small-button {
+  height: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.86);
+  padding: 0 11px;
+  font: 800 11px/1 Arial, Helvetica, sans-serif;
+  cursor: pointer;
+}
+
 .assistia-reply-body {
   display: grid;
-  gap: 10px;
-  padding: 14px;
+  gap: 12px;
+  max-height: calc(100vh - 290px);
+  overflow: auto;
+  padding: 14px 16px;
 }
 
-.assistia-reply-body textarea,
-.assistia-reply-body select {
+.assistia-field {
+  display: grid;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.assistia-field textarea,
+.assistia-reply-output {
   width: 100%;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  outline: none;
   background: rgba(255, 255, 255, 0.06);
   color: #fff;
-  font: 13px/1.5 Arial, Helvetica, sans-serif;
-}
-
-.assistia-reply-body textarea {
-  min-height: 92px;
+  font: 13px/1.55 Arial, Helvetica, sans-serif;
   resize: vertical;
-  padding: 11px;
 }
 
-.assistia-reply-body select {
-  height: 38px;
-  padding: 0 10px;
+.assistia-field textarea {
+  min-height: 108px;
+  padding: 12px;
+}
+
+.assistia-field textarea::placeholder,
+.assistia-reply-output::placeholder {
+  color: rgba(255, 255, 255, 0.34);
+}
+
+.assistia-tone-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.assistia-tone-row button {
+  min-height: 34px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.055);
+  color: rgba(255, 255, 255, 0.72);
+  font: 800 11px/1.2 Arial, Helvetica, sans-serif;
+  cursor: pointer;
+}
+
+.assistia-tone-row button.is-active {
+  border-color: rgba(37, 211, 102, 0.5);
+  background: rgba(37, 211, 102, 0.14);
+  color: #fff;
+}
+
+.assistia-generate {
+  height: 46px;
+  border: 0;
+  border-radius: 999px;
+  background: #25d366;
+  color: #031007;
+  font: 900 13px/1 Arial, Helvetica, sans-serif;
+  cursor: pointer;
+}
+
+.assistia-generate:disabled,
+.assistia-reply-actions button:disabled {
+  cursor: wait;
+  opacity: 0.62;
+}
+
+.assistia-output-wrap {
+  display: grid;
+  gap: 8px;
+}
+
+.assistia-output-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.assistia-output-head span {
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 11px;
 }
 
 .assistia-reply-output {
-  min-height: 86px;
-  max-height: 190px;
-  overflow: auto;
-  border-radius: 12px;
-  background: rgba(37, 211, 102, 0.09);
-  color: rgba(255, 255, 255, 0.9);
+  min-height: 164px;
+  max-height: 280px;
+  border-color: rgba(37, 211, 102, 0.28);
+  background: rgba(37, 211, 102, 0.075);
   padding: 12px;
-  font-size: 13px;
-  line-height: 1.55;
-  white-space: pre-wrap;
 }
 
 .assistia-reply-actions {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
 }
 
 .assistia-reply-actions button {
-  height: 38px;
+  min-height: 38px;
   border: 0;
   border-radius: 999px;
-  padding: 0 14px;
-  font: 800 12px/1 Arial, Helvetica, sans-serif;
+  padding: 0 13px;
+  font: 900 12px/1.2 Arial, Helvetica, sans-serif;
   cursor: pointer;
 }
 
@@ -131,4 +284,16 @@
 .assistia-reply-secondary {
   background: rgba(255, 255, 255, 0.08);
   color: #fff;
+}
+
+@media (max-width: 520px) {
+  .assistia-reply-panel {
+    inset: auto 12px 76px 12px;
+    width: auto;
+  }
+
+  .assistia-reply-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
 }

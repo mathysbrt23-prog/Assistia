@@ -22,6 +22,7 @@ Le produit ne remplace pas les apps de messagerie. Il ajoute un copilote discret
 - Plans Free, Pro et Business
 - Stripe Checkout + webhook abonnement
 - API `/api/reply/generate` pour générer ou reformuler une réponse
+- Connexion extension via clé générée depuis le dashboard
 - Historique léger des réponses générées
 - Schéma Supabase orienté extension + usage
 
@@ -57,6 +58,10 @@ Le schéma crée :
 - `extension_installations`
 
 Toutes les tables utilisateur ont RLS activé.
+
+Si tu avais déjà exécuté une ancienne version du schéma, relance le fichier SQL complet : il ajoute
+les colonnes nécessaires à la connexion extension (`install_token_hash`, `token_prefix`,
+`revoked_at`, `label`).
 
 ## 2. Configurer Stripe
 
@@ -145,9 +150,12 @@ Réponse :
 2. Crée un compte sur `/signup`.
 3. Va sur `/dashboard`.
 4. Configure le ton par défaut.
-5. Appelle `/api/reply/generate` depuis un client authentifié ou depuis l’extension Chrome.
-6. Vérifie que la ligne apparaît dans `reply_requests`.
-7. Vérifie le quota mensuel dans le dashboard.
+5. Dans le bloc “Installer l’extension”, génère une clé extension.
+6. Charge le dossier `extension/` dans Chrome depuis `chrome://extensions`.
+7. Ouvre le popup Assistia, colle l’URL app et la clé extension, puis enregistre.
+8. Ouvre un mail dans Gmail, clique sur Assistia, écris ton idée de réponse et génère.
+9. Clique sur “Insérer dans Gmail” pour ajouter le brouillon sans envoi automatique.
+10. Vérifie que la ligne apparaît dans `reply_requests`.
 
 ## 6. MVP extension Chrome
 
@@ -155,10 +163,20 @@ Le dossier `extension/` contient un premier prototype Chrome Manifest V3 avec :
 
 - `manifest.json` Manifest V3
 - content script Gmail
-- bouton Assistia dans le champ de réponse
-- popup ou panneau léger
+- bouton Assistia flottant dans Gmail
+- popup Chrome pour enregistrer l’URL app et la clé extension
+- panneau Gmail avec zone “Ton idée de réponse” et “Réponse proposée”
 - appel à `/api/reply/generate`
-- insertion du brouillon sans auto-send
+- insertion du brouillon dans Gmail sans auto-send
+
+Installation locale :
+
+1. Va sur `chrome://extensions`.
+2. Active le mode développeur.
+3. Clique sur “Charger l’extension non empaquetée”.
+4. Sélectionne le dossier `extension/`.
+5. Clique sur l’icône Assistia dans Chrome.
+6. Colle la clé extension générée dans le dashboard.
 
 Ordre d’amélioration recommandé :
 

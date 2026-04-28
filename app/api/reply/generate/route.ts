@@ -53,7 +53,7 @@ function buildPrompt(input: z.infer<typeof schema>, tone: string, language: stri
 
 export async function POST(request: Request) {
   try {
-    const { supabase, user } = await requireApiUser();
+    const { supabase, user, authMethod, extensionId } = await requireApiUser(request);
     const body = schema.parse(await request.json());
 
     const [{ data: profile }, { data: subscription }, usageResult] = await Promise.all([
@@ -127,6 +127,8 @@ export async function POST(request: Request) {
         generated_reply: reply,
         status: "completed",
         metadata: {
+          auth_method: authMethod,
+          extension_id: extensionId || null,
           plan: plan.id,
           model: getOpenAIModel()
         }

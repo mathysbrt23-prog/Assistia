@@ -1,5 +1,5 @@
 body {
-  width: 300px;
+  width: 340px;
   margin: 0;
   background: #050505;
   color: #fff;
@@ -8,17 +8,39 @@ body {
 
 main {
   display: grid;
-  gap: 12px;
+  gap: 13px;
   padding: 16px;
 }
 
-h1 {
+header {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding-bottom: 4px;
+}
+
+.logo {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 2px #fff;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+h1,
+p {
   margin: 0;
+}
+
+h1 {
   font-size: 18px;
 }
 
 p {
-  margin: 0;
   color: rgba(255, 255, 255, 0.62);
   font-size: 13px;
   line-height: 1.45;
@@ -29,29 +51,47 @@ label {
   gap: 6px;
   color: rgba(255, 255, 255, 0.78);
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 800;
+}
+
+input,
+textarea {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font: 12px/1.45 Arial, Helvetica, sans-serif;
 }
 
 input {
   height: 38px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
   padding: 0 10px;
 }
 
+textarea {
+  min-height: 84px;
+  padding: 10px;
+  resize: vertical;
+}
+
 button {
-  height: 38px;
+  min-height: 40px;
   border: 0;
   border-radius: 999px;
-  background: #fff;
-  color: #000;
-  font-weight: 800;
+  background: #25d366;
+  color: #031007;
+  font-weight: 900;
   cursor: pointer;
 }
 
-button[data-dashboard] {
+button[data-dashboard],
+button[data-open] {
   background: rgba(255, 255, 255, 0.08);
   color: #fff;
+}
+
+[data-status] {
+  min-height: 18px;
+  color: rgba(255, 255, 255, 0.62);
 }

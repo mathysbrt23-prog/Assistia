@@ -90,6 +90,9 @@ Le dossier a ete nettoye :
 - `docs/product/assistia-reply-analyse-produit.docx`
   Analyse produit de la nouvelle piste Assistia Reply : MVP, faisabilite, architecture, risques, pricing et roadmap.
 
+- `docs/investor/assistia-reply-pitch-investisseur.docx`
+  Pitch investisseur complet : marche, concurrence, business model, projections, ask et annexes VC.
+
 - `docs/README.md`
   Index des documents conserves.
 
@@ -143,6 +146,16 @@ Le backend a ete simplifie autour du nouveau produit. Les modules Google Calenda
 - Suppression du code actif lie a Google Calendar, Gmail API serveur, WhatsApp Business Cloud API et agent WhatsApp.
 - Ajout d'un premier dossier `extension/` pour le prototype Chrome Manifest V3.
 - Verification technique du pivot : `pnpm lint` et `pnpm build` passent avec le nouveau socle Assistia Reply.
+- Creation du document Word `docs/investor/assistia-reply-pitch-investisseur.docx` : pitch investisseur complet avec marche, concurrence, business model, projections, ask et annexes VC.
+
+### 29 avril 2026
+
+- Passage de la landing au debut d'outil fonctionnel.
+- Ajout d'une connexion extension via cle generee depuis le dashboard, afin de ne pas dependre uniquement des cookies Supabase dans Chrome.
+- Ajout des routes API `/api/extension/token` et `/api/extension/ping`.
+- Mise a jour de `/api/reply/generate` pour accepter les appels authentifies depuis l'extension.
+- Refonte du prototype Chrome : popup de configuration, panneau Assistia dans Gmail, lecture du mail visible, zone d'intention, generation/reformulation, copie et insertion dans Gmail sans envoi automatique.
+- Mise a jour du schema Supabase pour stocker les cles extension sous forme de hash.
 
 ## Ce qui reste a faire
 
@@ -152,6 +165,7 @@ Priorite courte :
 - valider le positionnement : "copilote de reponses professionnelles en francais pour emails et conversations client" ;
 - tester l'API `/api/reply/generate` avec un vrai compte Supabase et une cle OpenAI ;
 - installer l'extension Chrome en local et valider l'insertion dans Gmail ;
+- generer une vraie cle extension depuis le dashboard et verifier le ping dans `extension_installations` ;
 - creer une capture ou petite demo video du nouveau parcours landing -> dashboard -> extension ;
 - remplacer les derniers textes "Business" si l'offre finale devient "Team".
 

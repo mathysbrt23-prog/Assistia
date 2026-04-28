@@ -2,19 +2,32 @@
 <html lang="fr">
   <head>
     <meta charset="utf-8" />
-    <title>Assistia Reply</title>
+    <title>Assistia</title>
     <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
     <main>
-      <h1>Assistia Reply</h1>
-      <p>Connecte l’extension à ton app Assistia.</p>
+      <header>
+        <span class="logo">A</span>
+        <div>
+          <h1>Assistia</h1>
+          <p>Extension Gmail</p>
+        </div>
+      </header>
+
       <label>
         URL de l’app
         <input data-app-url placeholder="http://localhost:3000" />
       </label>
+
+      <label>
+        Clé extension
+        <textarea data-token placeholder="Colle ici la clé générée dans le dashboard Assistia"></textarea>
+      </label>
+
       <button data-save>Enregistrer</button>
-      <button data-dashboard>Ouvrir le dashboard</button>
+      <button data-open>Ouvrir sur cette page</button>
+      <button data-dashboard>Dashboard</button>
       <p data-status></p>
     </main>
     <script src="popup.js"></script>

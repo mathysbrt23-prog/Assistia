@@ -12,6 +12,7 @@ import {
   Sparkles
 } from "lucide-react";
 import {
+  ExtensionTokenGenerator,
   ReplyPreferencesForm,
   SignOutButton,
   StripePlanButtons
@@ -210,12 +211,19 @@ export default async function DashboardPage() {
                 </p>
                 <ol className="grid gap-2">
                   <li>1. Installer l’extension locale depuis le dossier `extension/`.</li>
-                  <li>2. Se connecter avec ce compte Assistia.</li>
-                  <li>3. Générer ou reformuler un brouillon sans auto-send.</li>
+                  <li>2. Générer une clé extension depuis ce dashboard.</li>
+                  <li>3. Coller la clé dans le popup Chrome Assistia.</li>
+                  <li>4. Générer ou reformuler un brouillon dans Gmail sans auto-send.</li>
                 </ol>
                 {extension?.last_seen_at ? (
                   <p>Dernière activité extension : {formatDateTime(asString(extension.last_seen_at))}</p>
                 ) : null}
+                {asString(extension?.token_prefix) ? (
+                  <p>Dernière clé utilisée : {asString(extension?.token_prefix)}…</p>
+                ) : null}
+              </div>
+              <div className="mt-5">
+                <ExtensionTokenGenerator />
               </div>
             </Panel>
 

@@ -30,6 +30,12 @@ SOURCES = [
         "description": "Analyse de faisabilite, MVP recommande, risques, pricing et roadmap.",
     },
     {
+        "title": "Pitch investisseur - Assistia Reply",
+        "path": ROOT / "docs" / "investor" / "assistia-reply-pitch-investisseur.docx",
+        "type": "docx",
+        "description": "Document investisseur complet : marche, concurrence, business model, projections et ask.",
+    },
+    {
         "title": "Rapport concurrence - Assistia Reply",
         "path": ROOT / "docs" / "product" / "rapport-concurrence-assistia-reply.md",
         "type": "markdown",
@@ -414,7 +420,7 @@ def add_docx_content(doc: Document, path: Path) -> None:
             text = p.text.strip()
             if not text:
                 continue
-            if text == "1. Verdict":
+            if text in {"1. Verdict", "1. EXECUTIVE SUMMARY"}:
                 started = True
             if not started:
                 continue

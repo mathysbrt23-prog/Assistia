@@ -17,7 +17,7 @@ function AssistiaLogo() {
       className="h-10 w-10 bg-black object-contain"
       height={80}
       priority
-      src="/assistia-logo.png"
+      src="/assistia-logo-round.png"
       width={80}
     />
   );

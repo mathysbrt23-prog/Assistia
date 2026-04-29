@@ -158,7 +158,7 @@ function AssistiaLogo({ className, priority = false }: { className: string; prio
       className={`${className} object-contain`}
       height={96}
       priority={priority}
-      src="/assistia-logo.png"
+      src="/assistia-logo-round.png"
       width={96}
     />
   );

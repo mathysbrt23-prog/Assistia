@@ -193,6 +193,10 @@ Le backend a ete simplifie autour du nouveau produit. Les modules Google Calenda
 - Regeneration du ZIP Chrome `dist/assistia-reply-chrome-v0.3.0.zip` avec les nouveaux assets.
 - Deploiement Vercel effectue apres correction visuelle.
 - Tests production valides : `/` et `/tool` repondent en `200`.
+- Creation d'un asset rond detoure `public/assistia-logo-round.png` : cercle noir, exterieur transparent, pointe conservee.
+- Remplacement du favicon `app/icon.png` par la version ronde detouree.
+- Mise a jour des logos web pour utiliser la version ronde detouree.
+- Regeneration des icones Chrome et du ZIP extension avec l'exterieur transparent.
 
 ## Ce qui reste a faire
 

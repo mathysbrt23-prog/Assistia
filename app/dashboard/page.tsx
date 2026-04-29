@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import {
   AlertTriangle,
@@ -45,6 +46,62 @@ function StatusPill({ ok, label }: { ok: boolean; label: string }) {
   );
 }
 
+function isSupabaseConfigured() {
+  return Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+}
+
+function ConfigurationPendingDashboard() {
+  const steps = [
+    "Créer le projet Supabase",
+    "Exécuter supabase/schema.sql",
+    "Ajouter les 3 variables Supabase dans Vercel",
+    "Ajouter OPENAI_API_KEY",
+    "Redéployer la production"
+  ];
+
+  return (
+    <main className="min-h-screen bg-[#030303] text-white">
+      <div className="mx-auto flex min-h-screen max-w-5xl flex-col justify-center px-5 py-12 sm:px-8">
+        <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#25D366]">Assistia Reply</p>
+        <h1 className="mt-4 max-w-3xl text-4xl font-semibold leading-tight sm:text-6xl">
+          Dashboard prêt, configuration Supabase en attente.
+        </h1>
+        <p className="mt-5 max-w-2xl text-base leading-7 text-zinc-400 sm:text-lg">
+          L’outil public fonctionne déjà en mode démo. Les comptes réels, les clés extension et
+          l’historique utilisateur seront activés dès que Supabase et OpenAI seront configurés en
+          production.
+        </p>
+
+        <div className="mt-8 grid gap-3 rounded-[28px] border border-white/10 bg-white/[0.04] p-5">
+          {steps.map((step, index) => (
+            <div className="flex items-center gap-3 rounded-2xl bg-black/30 p-3 text-sm text-zinc-300" key={step}>
+              <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#25D366]/10 text-xs font-bold text-[#25D366]">
+                {index + 1}
+              </span>
+              {step}
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-8 flex flex-wrap gap-3">
+          <Link
+            className="focus-ring inline-flex h-11 items-center justify-center rounded-md bg-white px-4 text-sm font-semibold text-black transition hover:bg-zinc-200"
+            href="/tool"
+          >
+            Ouvrir l’outil
+          </Link>
+          <Link
+            className="focus-ring inline-flex h-11 items-center justify-center rounded-md border border-white/10 px-4 text-sm font-semibold text-white transition hover:bg-white/[0.08]"
+            href="/"
+          >
+            Retour landing
+          </Link>
+        </div>
+      </div>
+    </main>
+  );
+}
+
 function Panel({
   children,
   title,
@@ -68,6 +125,10 @@ function Panel({
 }
 
 export default async function DashboardPage() {
+  if (!isSupabaseConfigured()) {
+    return <ConfigurationPendingDashboard />;
+  }
+
   const supabase = await createSupabaseServerClient();
   const {
     data: { user }
@@ -217,7 +278,7 @@ export default async function DashboardPage() {
               <div className="grid gap-3 text-sm leading-6 text-zinc-600">
                 <p>
                   Le MVP d’Assistia Reply démarre comme une extension Chrome qui ajoute un bouton
-                  Assistia dans Gmail, puis WhatsApp Web.
+                  Assistia dans Gmail.
                 </p>
                 <ol className="grid gap-2">
                   <li>1. Installer l’extension locale depuis le dossier `extension/`.</li>

@@ -5,7 +5,7 @@ const steps = [
   {
     icon: Chrome,
     title: "Installe l’extension",
-    text: "Assistia Reply démarre dans Chrome, directement dans Gmail puis WhatsApp Web."
+    text: "Assistia Reply démarre dans Chrome, directement dans Gmail."
   },
   {
     icon: MessageSquareText,
@@ -30,8 +30,8 @@ export default function OnboardingPage() {
           <p className="text-sm font-bold uppercase text-moss">Onboarding</p>
           <h1 className="mt-3 text-4xl font-bold md:text-5xl">Active Assistia Reply en 3 étapes.</h1>
           <p className="mt-4 text-zinc-700">
-            Le MVP ne remplace pas Gmail ou WhatsApp Web. Il ajoute simplement le bon brouillon au
-            bon endroit, sans envoi automatique.
+            La v1 ne remplace pas Gmail. Elle ajoute simplement le bon brouillon au bon endroit,
+            sans envoi automatique.
           </p>
         </div>
         <div className="mt-10 grid gap-4 md:grid-cols-3">

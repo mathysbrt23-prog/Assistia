@@ -1,6 +1,6 @@
 # Assistia Reply
 
-Assistia Reply est un SaaS Next.js qui aide à générer ou reformuler des réponses professionnelles directement dans Gmail, WhatsApp Web et, plus tard, LinkedIn/Outlook Web.
+Assistia Reply est un SaaS Next.js qui aide à générer ou reformuler des brouillons professionnels directement dans Gmail.
 
 Le produit ne remplace pas les apps de messagerie. Il ajoute un copilote discret dans le champ de réponse : l’utilisateur écrit son intention, Assistia propose un brouillon, puis l’utilisateur relit et envoie lui-même.
 
@@ -20,12 +20,13 @@ Le produit ne remplace pas les apps de messagerie. Il ajoute un copilote discret
 - Inscription / connexion email-password et Google via Supabase Auth
 - Dashboard utilisateur
 - Préférences de réponse : ton, langue, rétention
-- Plans Free, Pro et Business
+- Plans Free, Pro et Team en préparation
 - Stripe Checkout + webhook abonnement
 - API `/api/reply/generate` pour générer ou reformuler une réponse
 - Connexion extension via clé générée depuis le dashboard ou connexion automatique depuis `/tool`
 - Historique léger des réponses générées
 - Schéma Supabase orienté extension + usage
+- Pages `/privacy` et `/terms` pour la publication v1
 
 ## Installation locale
 
@@ -33,6 +34,12 @@ Le produit ne remplace pas les apps de messagerie. Il ajoute un copilote discret
 pnpm install
 cp .env.example .env.local
 pnpm dev
+```
+
+Vérification readiness v1 :
+
+```bash
+pnpm check:prod
 ```
 
 Si ton environnement macOS bloque le binaire natif SWC de Next, ajoute temporairement :
@@ -70,7 +77,7 @@ les colonnes nécessaires à la connexion extension (`install_token_hash`, `toke
 Crée deux produits récurrents :
 
 - Pro — 9 €/mois
-- Business — 29 €/mois
+- Team — 29 €/mois
 
 Renseigne ensuite :
 
@@ -164,6 +171,14 @@ Quand ces variables sont renseignées, la page `/tool` affiche un bouton “Ajou
 peut connecter automatiquement l’extension au compte Assistia. Si l’extension n’est pas trouvée,
 la page affiche une clé à copier dans le popup Chrome en fallback.
 
+Préparation Chrome Store :
+
+- document de listing et justifications : [docs/chrome-store-v1.md](./docs/chrome-store-v1.md)
+- runbook production : [docs/v1-production-runbook.md](./docs/v1-production-runbook.md)
+- politique de confidentialité : `/privacy`
+- conditions d’utilisation : `/terms`
+- objectif unique v1 : génération de brouillons professionnels dans Gmail
+
 ## 6. Tester le produit
 
 1. Lance `pnpm dev`.
@@ -179,10 +194,10 @@ la page affiche une clé à copier dans le popup Chrome en fallback.
 
 ## 7. MVP extension Chrome
 
-Le dossier `extension/` contient un premier prototype Chrome Manifest V3 avec :
+Le dossier `extension/` contient un premier prototype Chrome Manifest V3 centré sur Gmail avec :
 
 - `manifest.json` Manifest V3
-- content script Gmail
+- content script Gmail uniquement
 - bouton Assistia flottant dans Gmail
 - popup Chrome pour enregistrer l’URL app et la clé extension
 - connexion automatique depuis la web app via `externally_connectable`
@@ -199,7 +214,7 @@ Installation locale :
 5. Clique sur l’icône Assistia dans Chrome.
 6. Colle la clé extension générée dans le dashboard.
 
-Ordre d’amélioration recommandé :
+Ordre d’amélioration après v1 :
 
 1. Gmail
 2. WhatsApp Web

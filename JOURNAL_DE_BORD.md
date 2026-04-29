@@ -166,6 +166,22 @@ Le backend a ete simplifie autour du nouveau produit. Les modules Google Calenda
 - Ajout d'un systeme de connexion automatique de l'extension depuis la web app quand l'extension Chrome publiee et son ID sont renseignes.
 - Ajout d'un fallback propre par cle extension pour la beta locale, avec copie du chemin du dossier `extension/`.
 - Correction du parcours auth : les redirections `next=/tool` sont conservees apres inscription email ou Google OAuth.
+- Preparation v1 sans paiement ni assets Chrome Store : scope officiellement reduit a Gmail uniquement.
+- Ajout des pages publiques `/privacy` et `/terms` pour la confiance utilisateur et la soumission Chrome Web Store.
+- Recentrage du manifest Chrome et du content script sur Gmail uniquement.
+- Creation du document `docs/chrome-store-v1.md` avec objectif unique, justifications de permissions, declarations de confidentialite et instructions reviewer.
+- Ajout du runbook `docs/v1-production-runbook.md` pour configurer Supabase, OpenAI, Vercel et Chrome Store sans exposer de secrets.
+- Ajout du script `pnpm check:prod` pour verifier la presence des pages legales, du schema Supabase, du ZIP Chrome, du manifest Gmail-only et des variables documentees.
+- Tentative de deploiement via l'integration Vercel : l'integration demande la CLI `vercel deploy`, mais aucun projet `.vercel` n'est encore lie et la CLI Vercel n'est pas installee localement.
+- Deploiement Vercel effectue avec le projet `assistia-reply`.
+- URL de production temporaire : `https://assistia-reply.vercel.app`.
+- Variables Vercel non sensibles ajoutees : `APP_URL`, `OPENAI_MODEL`, `NEXT_PUBLIC_SUPPORT_EMAIL`.
+- Nouveau deploiement production effectue apres ajout des variables Vercel.
+- Tests production valides : `/`, `/tool`, `/privacy`, `/terms` repondent en `200`.
+- Test API production valide en mode demo : `/api/reply/generate` retourne une proposition locale tant que `OPENAI_API_KEY` n'est pas encore configuree.
+- Correction du dashboard en mode production sans Supabase : `/dashboard` affiche maintenant un ecran de configuration propre au lieu d'une erreur `500`.
+- Nouveau deploiement production effectue apres correction du dashboard.
+- Tests production valides : `/dashboard`, `/tool`, `/signup` repondent en `200`, et `/api/reply/generate` fonctionne en mode demo.
 
 ## Ce qui reste a faire
 
@@ -179,7 +195,8 @@ Priorite courte :
 - publier l'extension sur le Chrome Web Store pour remplacer l'installation locale par un vrai bouton "Ajouter a Chrome" ;
 - renseigner `NEXT_PUBLIC_CHROME_EXTENSION_URL` et `NEXT_PUBLIC_CHROME_EXTENSION_ID` pour activer le parcours client en quelques clics ;
 - creer une capture ou petite demo video du nouveau parcours landing -> dashboard -> extension ;
-- remplacer les derniers textes "Business" si l'offre finale devient "Team".
+- brancher Stripe live et finaliser les offres payantes quand on reprendra la partie paiement ;
+- creer les assets Chrome Store : icones, screenshots, visuels et description finale.
 
 MVP technique :
 
@@ -215,3 +232,11 @@ Tester le nouveau socle produit en conditions reelles :
 - renseigner OpenAI et Stripe ;
 - charger l'extension Chrome en local ;
 - verifier la generation d'une reponse dans Gmail.
+
+Prochaine etape production immediate :
+
+- creer le projet Supabase reel ;
+- executer `supabase/schema.sql` ;
+- ajouter dans Vercel `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` et `OPENAI_API_KEY` ;
+- redeployer `https://assistia-reply.vercel.app` ;
+- tester inscription, connexion, generation OpenAI reelle et cle extension.

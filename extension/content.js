@@ -112,9 +112,6 @@
 
   function getSource() {
     if (location.hostname.includes("mail.google.com")) return "gmail";
-    if (location.hostname.includes("web.whatsapp.com")) return "whatsapp_web";
-    if (location.hostname.includes("linkedin.com")) return "linkedin";
-    if (location.hostname.includes("outlook")) return "outlook_web";
     return "manual";
   }
 
@@ -165,17 +162,8 @@
     return { title, context: cleanText(context, 6000) };
   }
 
-  function getGenericContext() {
-    const selection = cleanText(window.getSelection()?.toString() || "", 5000);
-    if (selection) return { title: "Sélection détectée", context: selection };
-    return {
-      title: document.title || "Page active",
-      context: cleanText(document.body.innerText || "", 6000)
-    };
-  }
-
   function readContext() {
-    const data = getSource() === "gmail" ? getGmailContext() : getGenericContext();
+    const data = getGmailContext();
     STATE.lastContext = data.context;
     contextTitle.textContent = data.title || "Contexte détecté";
     status.textContent = data.context ? "Contexte prêt" : "Aucun contexte";

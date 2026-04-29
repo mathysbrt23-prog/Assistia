@@ -129,6 +129,14 @@ export default async function ToolPage() {
                 Chrome Web Store et renseigner son URL + son ID dans les variables d’environnement.
                 Le fallback local reste utile pour tester avant publication.
               </p>
+              <div className="mt-4 flex flex-wrap gap-4 text-sm text-zinc-500">
+                <Link className="hover:text-white" href="/privacy">
+                  Confidentialité
+                </Link>
+                <Link className="hover:text-white" href="/terms">
+                  Conditions
+                </Link>
+              </div>
             </div>
             <ButtonLink href="/dashboard" variant="secondary">
               Voir le dashboard

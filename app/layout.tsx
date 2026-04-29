@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Assistia Reply - Réponses professionnelles dans Gmail et WhatsApp Web",
+  title: "Assistia Reply - Réponses professionnelles dans Gmail",
   description:
-    "Génère ou reformule des réponses professionnelles en français directement dans Gmail et WhatsApp Web."
+    "Génère ou reformule des brouillons professionnels en français directement dans Gmail."
 };
 
 export default function RootLayout({

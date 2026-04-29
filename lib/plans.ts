@@ -15,7 +15,7 @@ export const plans: Array<{
     price: "0€",
     monthlyReplies: 20,
     description: "Pour tester Assistia sur quelques réponses.",
-    features: ["20 réponses / mois", "Gmail ou WhatsApp Web", "Tons pro, court, chaleureux"]
+    features: ["20 réponses / mois", "Extension Gmail", "Tons pro, court, chaleureux"]
   },
   {
     id: "pro",
@@ -26,14 +26,14 @@ export const plans: Array<{
     priceEnv: "STRIPE_PRICE_PRO",
     features: [
       "1 000 réponses / mois",
-      "Gmail + WhatsApp Web",
+      "Extension Gmail",
       "Templates relance, prix, refus, SAV",
       "Préférences de ton"
     ]
   },
   {
     id: "business",
-    name: "Business",
+    name: "Team",
     price: "29€",
     monthlyReplies: 3000,
     description: "Pour les petites équipes qui répondent aux clients.",

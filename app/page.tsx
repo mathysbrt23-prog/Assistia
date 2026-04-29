@@ -73,8 +73,8 @@ const features: Array<{ icon: LucideIcon; title: string; text: string }> = [
   },
   {
     icon: MessageSquareText,
-    title: "Prépare aussi tes conversations",
-    text: "Le même principe peut s’étendre à WhatsApp Web, LinkedIn ou aux conversations client."
+    title: "Standardise tes échanges client",
+    text: "Relances, objections prix, refus ou suivi : Assistia aide à garder un ton clair dans Gmail."
   },
   {
     icon: ShieldCheck,
@@ -138,7 +138,7 @@ const pricing = [
     name: "Pro",
     price: "9€",
     description: "Pour répondre mieux et plus vite chaque semaine.",
-    items: ["1 000 réponses par mois", "Gmail + WhatsApp Web", "Tons professionnels"],
+    items: ["1 000 réponses par mois", "Extension Gmail", "Tons professionnels"],
     cta: "Essayer Pro",
     featured: true
   },
@@ -765,6 +765,12 @@ export default function Home() {
           <div className="flex flex-wrap gap-5">
             <Link className="transition hover:text-white" href="/tool">
               Essayer
+            </Link>
+            <Link className="transition hover:text-white" href="/privacy">
+              Confidentialité
+            </Link>
+            <Link className="transition hover:text-white" href="/terms">
+              Conditions
             </Link>
             <Link className="transition hover:text-white" href="#securite">
               Sécurité

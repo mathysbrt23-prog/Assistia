@@ -1,6 +1,6 @@
 # Journal de bord - Assistia
 
-Derniere mise a jour : 28 avril 2026
+Derniere mise a jour : 29 avril 2026
 
 ## Regle de travail
 
@@ -159,6 +159,9 @@ Le backend a ete simplifie autour du nouveau produit. Les modules Google Calenda
 - Refonte du prototype Chrome : popup de configuration, panneau Assistia dans Gmail, lecture du mail visible, zone d'intention, generation/reformulation, copie et insertion dans Gmail sans envoi automatique.
 - Mise a jour du schema Supabase pour stocker les cles extension sous forme de hash.
 - Tous les boutons principaux de la landing ("Essayer", "Essayer gratuitement", "Commencer") pointent maintenant vers `/tool`.
+- Sauvegarde de l'ancienne landing dans `app/page.previous-landing.tsx` pour pouvoir revenir en arriere.
+- Nouvelle refonte complete de la landing : experience plus produit, plus conversion, avec un mock Gmail + extension Assistia des le hero.
+- Conservation du lien entre la landing et l'outil : les CTA principaux continuent d'envoyer vers `/tool`.
 
 ## Ce qui reste a faire
 

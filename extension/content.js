@@ -2,7 +2,7 @@
   if (window.__assistiaReplyLoaded) return;
   window.__assistiaReplyLoaded = true;
 
-  const EXTENSION_VERSION = "0.3.0";
+  const EXTENSION_VERSION = "0.3.1";
   const STATE = {
     lastOutput: "",
     lastContext: "",

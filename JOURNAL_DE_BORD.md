@@ -190,13 +190,15 @@ Le backend a ete simplifie autour du nouveau produit. Les modules Google Calenda
 - Ajout d'une initialisation explicite de l'icone de barre Chrome via `chrome.action.setIcon`.
 - Ajout du vrai logo comme ressource accessible par le content script Gmail.
 - Correction des logos de la landing et de `/tool` pour ne plus couper la pointe de la bulle.
-- Regeneration du ZIP Chrome `dist/assistia-reply-chrome-v0.3.0.zip` avec les nouveaux assets.
+- Regeneration du ZIP Chrome `dist/assistia-reply-chrome-v0.3.1.zip` avec les nouveaux assets.
 - Deploiement Vercel effectue apres correction visuelle.
 - Tests production valides : `/` et `/tool` repondent en `200`.
 - Creation d'un asset rond detoure `public/assistia-logo-round.png` : cercle noir, exterieur transparent, pointe conservee.
 - Remplacement du favicon `app/icon.png` par la version ronde detouree.
 - Mise a jour des logos web pour utiliser la version ronde detouree.
 - Regeneration des icones Chrome et du ZIP extension avec l'exterieur transparent.
+- Suppression des fonds noirs rectangulaires autour du logo sur la landing, `/tool`, le popup Chrome et le panneau Gmail.
+- Passage de l'extension Chrome en version `0.3.1` pour faciliter le rechargement de la nouvelle icone.
 
 ## Ce qui reste a faire
 

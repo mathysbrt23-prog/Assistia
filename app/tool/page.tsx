@@ -14,7 +14,7 @@ function AssistiaLogo() {
   return (
     <Image
       alt="Assistia"
-      className="h-10 w-10 bg-black object-contain"
+      className="h-10 w-10 object-contain"
       height={80}
       priority
       src="/assistia-logo-round.png"

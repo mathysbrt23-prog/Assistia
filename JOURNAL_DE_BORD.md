@@ -162,6 +162,10 @@ Le backend a ete simplifie autour du nouveau produit. Les modules Google Calenda
 - Sauvegarde de l'ancienne landing dans `app/page.previous-landing.tsx` pour pouvoir revenir en arriere.
 - Nouvelle refonte complete de la landing : experience plus produit, plus conversion, avec un mock Gmail + extension Assistia des le hero.
 - Conservation du lien entre la landing et l'outil : les CTA principaux continuent d'envoyer vers `/tool`.
+- Refonte de la page `/tool` en parcours d'activation plus concret : test web, compte, installation extension, connexion, ouverture Gmail.
+- Ajout d'un systeme de connexion automatique de l'extension depuis la web app quand l'extension Chrome publiee et son ID sont renseignes.
+- Ajout d'un fallback propre par cle extension pour la beta locale, avec copie du chemin du dossier `extension/`.
+- Correction du parcours auth : les redirections `next=/tool` sont conservees apres inscription email ou Google OAuth.
 
 ## Ce qui reste a faire
 
@@ -172,6 +176,8 @@ Priorite courte :
 - tester l'API `/api/reply/generate` avec un vrai compte Supabase et une cle OpenAI ;
 - installer l'extension Chrome en local et valider l'insertion dans Gmail ;
 - generer une vraie cle extension depuis le dashboard et verifier le ping dans `extension_installations` ;
+- publier l'extension sur le Chrome Web Store pour remplacer l'installation locale par un vrai bouton "Ajouter a Chrome" ;
+- renseigner `NEXT_PUBLIC_CHROME_EXTENSION_URL` et `NEXT_PUBLIC_CHROME_EXTENSION_ID` pour activer le parcours client en quelques clics ;
 - creer une capture ou petite demo video du nouveau parcours landing -> dashboard -> extension ;
 - remplacer les derniers textes "Business" si l'offre finale devient "Team".
 

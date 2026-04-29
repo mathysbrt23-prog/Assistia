@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { SelectField } from "@/components/ui/field";
 import { paidPlans } from "@/lib/plans";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
+import { cn } from "@/lib/utils";
 
 export function StripePlanButtons({ currentPlan }: { currentPlan?: string | null }) {
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
@@ -147,7 +148,7 @@ export function ExtensionTokenGenerator() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         browser: "chrome",
-        extensionVersion: "0.2.0",
+        extensionVersion: "0.3.0",
         label: "Chrome local"
       })
     });
@@ -217,7 +218,7 @@ export function ExtensionTokenGenerator() {
   );
 }
 
-export function SignOutButton() {
+export function SignOutButton({ className }: { className?: string }) {
   const router = useRouter();
 
   async function signOut() {
@@ -228,7 +229,7 @@ export function SignOutButton() {
   }
 
   return (
-    <Button onClick={signOut} variant="ghost">
+    <Button className={cn(className)} onClick={signOut} variant="ghost">
       <LogOut className="h-4 w-4" aria-hidden="true" />
       Déconnexion
     </Button>

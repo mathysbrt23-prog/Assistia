@@ -33,7 +33,7 @@ save.addEventListener("click", async () => {
       type: "assistia.ping",
       payload: {
         source: "popup",
-        extensionVersion: "0.2.0"
+        extensionVersion: "0.3.0"
       }
     },
     (response) => {

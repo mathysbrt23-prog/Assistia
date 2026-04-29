@@ -66,40 +66,41 @@ export function ReplyTool() {
   }
 
   return (
-    <section className="rounded-lg border border-line bg-white p-5 shadow-sm">
+    <section className="rounded-[28px] border border-white/10 bg-white/[0.04] p-5 shadow-[0_24px_80px_rgba(0,0,0,0.35)]">
       <div className="mb-5 flex items-center gap-3">
-        <span className="grid h-10 w-10 place-items-center rounded-md bg-mint text-moss">
+        <span className="grid h-11 w-11 place-items-center rounded-2xl bg-[#25D366]/10 text-[#25D366]">
           <Wand2 className="h-5 w-5" aria-hidden="true" />
         </span>
         <div>
-          <h2 className="text-lg font-bold text-ink">Tester Assistia</h2>
-          <p className="text-sm text-zinc-600">Colle un mail, écris ton intention, récupère une réponse prête.</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#25D366]">Test web</p>
+          <h2 className="mt-1 text-2xl font-semibold text-white">Tester Assistia</h2>
+          <p className="mt-1 text-sm text-zinc-400">Colle un mail, écris ton intention, récupère une réponse prête.</p>
         </div>
       </div>
 
       <form className="grid gap-4" onSubmit={generate}>
-        <label className="grid gap-2 text-sm font-medium text-ink">
+        <label className="grid gap-2 text-sm font-medium text-zinc-200">
           Mail ou message reçu
           <textarea
-            className="focus-ring min-h-36 rounded-md border border-line bg-fog p-3 text-sm leading-6 text-ink"
+            className="focus-ring min-h-36 rounded-2xl border border-white/10 bg-black/30 p-4 text-sm leading-6 text-white placeholder:text-zinc-500"
             onChange={(event) => setContext(event.target.value)}
             value={context}
           />
         </label>
 
-        <label className="grid gap-2 text-sm font-medium text-ink">
+        <label className="grid gap-2 text-sm font-medium text-zinc-200">
           Ce que tu veux répondre
           <textarea
-            className="focus-ring min-h-24 rounded-md border border-line bg-white p-3 text-sm leading-6 text-ink"
+            className="focus-ring min-h-24 rounded-2xl border border-white/10 bg-black/30 p-4 text-sm leading-6 text-white placeholder:text-zinc-500"
             onChange={(event) => setInstruction(event.target.value)}
             value={instruction}
           />
         </label>
 
-        <label className="grid gap-2 text-sm font-medium text-ink">
+        <label className="grid gap-2 text-sm font-medium text-zinc-200">
           Ton
           <select
-            className="focus-ring h-11 rounded-md border border-line bg-white px-3 text-sm text-ink"
+            className="focus-ring h-12 rounded-2xl border border-white/10 bg-black/30 px-4 text-sm text-white"
             onChange={(event) => setTone(event.target.value)}
             value={tone}
           >
@@ -112,28 +113,28 @@ export function ReplyTool() {
         </label>
 
         {error ? (
-          <p className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+          <p className="rounded-2xl border border-red-400/30 bg-red-400/10 px-4 py-3 text-sm text-red-100">
             {error}
           </p>
         ) : null}
 
-        <Button disabled={loading || instruction.length < 2} type="submit">
+        <Button className="h-12 rounded-2xl" disabled={loading || instruction.length < 2} type="submit">
           {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
           Générer une réponse
         </Button>
       </form>
 
-      <div className="mt-5 rounded-md border border-line bg-fog p-4">
+      <div className="mt-5 rounded-2xl border border-white/10 bg-black/30 p-4">
         <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
-          <p className="text-sm font-bold text-ink">Réponse proposée</p>
+          <p className="text-sm font-semibold text-white">Réponse proposée</p>
           {usage ? (
-            <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-zinc-600">
+            <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs font-semibold text-zinc-400">
               {usage.remaining} restantes
             </span>
           ) : null}
         </div>
         <textarea
-          className="focus-ring min-h-40 w-full rounded-md border border-line bg-white p-3 text-sm leading-6 text-ink"
+          className="focus-ring min-h-40 w-full rounded-2xl border border-white/10 bg-[#050505] p-4 text-sm leading-6 text-white placeholder:text-zinc-500"
           onChange={(event) => setReply(event.target.value)}
           placeholder="La réponse générée apparaîtra ici."
           value={reply}

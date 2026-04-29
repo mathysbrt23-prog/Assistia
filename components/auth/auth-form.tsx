@@ -13,24 +13,45 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [info, setInfo] = useState<string | null>(null);
   const isSignup = mode === "signup";
+
+  function safeNextPath() {
+    const next = searchParams.get("next") || "/dashboard";
+    if (!next.startsWith("/") || next.startsWith("//")) return "/dashboard";
+    return next;
+  }
+
+  function callbackUrl() {
+    const url = new URL("/auth/callback", window.location.origin);
+    url.searchParams.set("next", safeNextPath());
+    return url.toString();
+  }
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoading(true);
     setError(null);
+    setInfo(null);
 
     const formData = new FormData(event.currentTarget);
     const email = String(formData.get("email") || "");
     const password = String(formData.get("password") || "");
-    const supabase = createSupabaseBrowserClient();
+    let supabase;
+    try {
+      supabase = createSupabaseBrowserClient();
+    } catch {
+      setError("Supabase n’est pas encore configuré. Ajoute les variables d’environnement pour activer les comptes réels.");
+      setLoading(false);
+      return;
+    }
 
     const response = isSignup
       ? await supabase.auth.signUp({
           email,
           password,
           options: {
-            emailRedirectTo: `${window.location.origin}/auth/callback`
+            emailRedirectTo: callbackUrl()
           }
         })
       : await supabase.auth.signInWithPassword({ email, password });
@@ -41,18 +62,33 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
       return;
     }
 
-    router.push(searchParams.get("next") || "/dashboard");
+    if (isSignup && !response.data.session) {
+      setInfo("Compte créé. Vérifie ton email pour confirmer l’inscription, puis tu seras redirigé vers l’outil.");
+      setLoading(false);
+      return;
+    }
+
+    router.push(safeNextPath());
     router.refresh();
   }
 
   async function continueWithGoogle() {
     setGoogleLoading(true);
     setError(null);
-    const supabase = createSupabaseBrowserClient();
+    setInfo(null);
+    let supabase;
+    try {
+      supabase = createSupabaseBrowserClient();
+    } catch {
+      setError("Supabase n’est pas encore configuré. Ajoute les variables d’environnement pour activer les comptes réels.");
+      setGoogleLoading(false);
+      return;
+    }
+
     const { error: oauthError } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`
+        redirectTo: callbackUrl()
       }
     });
 
@@ -91,6 +127,11 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
         {error ? (
           <p className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
             {error}
+          </p>
+        ) : null}
+        {info ? (
+          <p className="rounded-md border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-800">
+            {info}
           </p>
         ) : null}
         <Button disabled={loading} type="submit">

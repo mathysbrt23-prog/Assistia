@@ -43,6 +43,42 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 });
 
+chrome.runtime.onMessageExternal.addListener((message, sender, sendResponse) => {
+  if (message?.type !== "assistia.connect") return false;
+
+  (async () => {
+    try {
+      const appUrl = normalizeAppUrl(message.appUrl);
+      const token = String(message.token || "").trim();
+
+      if (!token) {
+        sendResponse({ ok: false, error: "Clé extension manquante." });
+        return;
+      }
+
+      await chrome.storage.sync.set({
+        assistiaAppUrl: appUrl,
+        assistiaExtensionToken: token
+      });
+
+      const data = await callAssistia("/api/extension/ping", {
+        source: "external-connect",
+        extensionVersion: String(message.extensionVersion || "0.3.0"),
+        location: sender?.url || undefined
+      });
+
+      sendResponse({ ok: true, data });
+    } catch (error) {
+      sendResponse({
+        ok: false,
+        error: error?.message || "Impossible de connecter Assistia."
+      });
+    }
+  })();
+
+  return true;
+});
+
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   if (!message?.type?.startsWith("assistia.")) return false;
 

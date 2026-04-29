@@ -23,7 +23,7 @@ Le produit ne remplace pas les apps de messagerie. Il ajoute un copilote discret
 - Plans Free, Pro et Business
 - Stripe Checkout + webhook abonnement
 - API `/api/reply/generate` pour générer ou reformuler une réponse
-- Connexion extension via clé générée depuis le dashboard
+- Connexion extension via clé générée depuis le dashboard ou connexion automatique depuis `/tool`
 - Historique léger des réponses générées
 - Schéma Supabase orienté extension + usage
 
@@ -47,7 +47,8 @@ NEXT_TEST_WASM_DIR=$(pwd)/node_modules/@next/swc-wasm-nodejs pnpm build
 2. Récupère `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` et `SUPABASE_SERVICE_ROLE_KEY`.
 3. Dans SQL Editor, exécute [supabase/schema.sql](./supabase/schema.sql).
 4. Active Email/Password dans Supabase Auth.
-5. Optionnel : active Google comme provider Supabase Auth pour la connexion au SaaS.
+5. Pour une bêta avec moins de friction, désactive la confirmation email au début ou utilise Google OAuth.
+6. Optionnel : active Google comme provider Supabase Auth pour la connexion au SaaS.
 
 Le schéma crée :
 
@@ -145,20 +146,38 @@ Réponse :
 4. Mets `APP_URL=https://ton-domaine.com`.
 5. Mets à jour les URLs Stripe.
 
-## 5. Tester le produit
+## 5. Publier l’extension Chrome
+
+Pour réduire la friction client, le parcours idéal est :
+
+1. Publier le dossier `extension/` sur le Chrome Web Store.
+2. Récupérer l’URL publique de la fiche Chrome Web Store.
+3. Récupérer l’ID public de l’extension.
+4. Renseigner ces variables côté Vercel :
+
+```env
+NEXT_PUBLIC_CHROME_EXTENSION_URL=
+NEXT_PUBLIC_CHROME_EXTENSION_ID=
+```
+
+Quand ces variables sont renseignées, la page `/tool` affiche un bouton “Ajouter à Chrome” et
+peut connecter automatiquement l’extension au compte Assistia. Si l’extension n’est pas trouvée,
+la page affiche une clé à copier dans le popup Chrome en fallback.
+
+## 6. Tester le produit
 
 1. Lance `pnpm dev`.
 2. Clique sur “Essayer gratuitement” depuis la landing, ou va sur `/tool`.
 3. Crée un compte si Supabase est configuré. Sans Supabase, `/tool` passe en mode local de démonstration.
 4. Teste une réponse directement dans l’outil web.
-5. Dans le bloc “Ajouter l’extension”, génère une clé extension.
-6. Charge le dossier `extension/` dans Chrome depuis `chrome://extensions`.
-7. Ouvre le popup Assistia, colle l’URL app et la clé extension, puis enregistre.
+5. Ajoute l’extension via le Chrome Web Store si elle est publiée, sinon charge le dossier local.
+6. Clique sur “Connecter automatiquement” si `NEXT_PUBLIC_CHROME_EXTENSION_ID` est configuré.
+7. Si la connexion automatique n’est pas disponible, copie la clé affichée dans le popup Assistia.
 8. Ouvre un mail dans Gmail, clique sur Assistia, écris ton idée de réponse et génère.
 9. Clique sur “Insérer dans Gmail” pour ajouter le brouillon sans envoi automatique.
 10. Vérifie que la ligne apparaît dans `reply_requests`.
 
-## 6. MVP extension Chrome
+## 7. MVP extension Chrome
 
 Le dossier `extension/` contient un premier prototype Chrome Manifest V3 avec :
 
@@ -166,6 +185,7 @@ Le dossier `extension/` contient un premier prototype Chrome Manifest V3 avec :
 - content script Gmail
 - bouton Assistia flottant dans Gmail
 - popup Chrome pour enregistrer l’URL app et la clé extension
+- connexion automatique depuis la web app via `externally_connectable`
 - panneau Gmail avec zone “Ton idée de réponse” et “Réponse proposée”
 - appel à `/api/reply/generate`
 - insertion du brouillon dans Gmail sans auto-send

@@ -2,7 +2,14 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { AuthForm } from "@/components/auth/auth-form";
 
-export default function LoginPage() {
+export default async function LoginPage({
+  searchParams
+}: {
+  searchParams?: Promise<{ next?: string }>;
+}) {
+  const next = (await searchParams)?.next;
+  const signupHref = next ? `/signup?next=${encodeURIComponent(next)}` : "/signup";
+
   return (
     <main className="grid min-h-screen place-items-center bg-fog px-5 py-12">
       <div className="w-full max-w-md">
@@ -11,7 +18,7 @@ export default function LoginPage() {
         </Suspense>
         <p className="mt-5 text-center text-sm text-zinc-600">
           Pas encore de compte ?{" "}
-          <Link className="font-semibold text-moss" href="/signup">
+          <Link className="font-semibold text-moss" href={signupHref}>
             S’inscrire
           </Link>
         </p>

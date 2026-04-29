@@ -2,15 +2,30 @@
   "manifest_version": 3,
   "name": "Assistia Reply",
   "description": "Génère ou reformule des réponses professionnelles dans Gmail et WhatsApp Web.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "permissions": ["storage", "activeTab"],
-  "host_permissions": ["http://localhost:3000/*", "https://*.vercel.app/*"],
+  "host_permissions": [
+    "http://localhost/*",
+    "http://127.0.0.1/*",
+    "https://*.vercel.app/*",
+    "https://assistia.ai/*",
+    "https://*.assistia.ai/*"
+  ],
   "action": {
     "default_title": "Assistia Reply",
     "default_popup": "popup.html"
   },
   "background": {
     "service_worker": "background.js"
+  },
+  "externally_connectable": {
+    "matches": [
+      "http://localhost/*",
+      "http://127.0.0.1/*",
+      "https://*.vercel.app/*",
+      "https://assistia.ai/*",
+      "https://*.assistia.ai/*"
+    ]
   },
   "content_scripts": [
     {

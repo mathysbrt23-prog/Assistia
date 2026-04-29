@@ -155,7 +155,7 @@ function AssistiaLogo({ className, priority = false }: { className: string; prio
   return (
     <Image
       alt="Assistia"
-      className={`${className} object-cover`}
+      className={`${className} object-contain`}
       height={96}
       priority={priority}
       src="/assistia-logo.png"
@@ -222,7 +222,7 @@ function Header() {
   return (
     <header className="relative z-20 mx-auto flex max-w-7xl items-center justify-between px-5 py-6 sm:px-8">
       <Link className="flex items-center gap-3" href="/">
-        <AssistiaLogo className="h-10 w-10 rounded-full border border-white/10 bg-black" priority />
+        <AssistiaLogo className="h-10 w-10 bg-black" priority />
         <span className="text-base font-semibold text-white">Assistia</span>
       </Link>
       <nav className="hidden items-center gap-8 text-sm text-zinc-400 md:flex">
@@ -326,7 +326,7 @@ function HeroWorkspace() {
               variants={reveal}
             >
               <div className="flex items-center gap-3 border-b border-white/10 pb-4">
-                <AssistiaLogo className="h-10 w-10 rounded-full border border-white/10 bg-black" priority />
+                <AssistiaLogo className="h-10 w-10 bg-black" priority />
                 <div className="min-w-0 flex-1">
                   <p className="font-semibold text-white">Assistia</p>
                   <p className="text-xs text-zinc-500">Réponse professionnelle</p>
@@ -660,7 +660,7 @@ function FinalCTA() {
     <section className="px-5 pb-10 sm:px-8">
       <div className="mx-auto max-w-6xl rounded-[28px] border border-white/10 bg-white/[0.035] px-6 py-14 text-center sm:px-10">
         <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-full border border-white/10 bg-black">
-          <AssistiaLogo className="h-12 w-12 rounded-full" />
+          <AssistiaLogo className="h-12 w-12" />
         </div>
         <h2 className="mx-auto max-w-3xl text-3xl font-semibold text-white sm:text-4xl">
           Essaie Assistia sur un vrai message en moins d’une minute.
@@ -759,7 +759,7 @@ export default function Home() {
       <footer className="border-t border-white/10 px-5 py-8 sm:px-8">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 text-sm text-zinc-500 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-3">
-            <AssistiaLogo className="h-8 w-8 rounded-full border border-white/10 bg-black" />
+            <AssistiaLogo className="h-8 w-8 bg-black" />
             <span>Assistia</span>
           </div>
           <div className="flex flex-wrap gap-5">

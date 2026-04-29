@@ -9,19 +9,24 @@
     selectedTone: "professionnel",
     isBusy: false
   };
+  const logoUrl = chrome.runtime.getURL("assistia-logo.png");
 
   const root = document.createElement("div");
   root.className = "assistia-root";
   root.innerHTML = `
     <button class="assistia-reply-trigger" type="button" aria-label="Ouvrir Assistia">
-      <span class="assistia-trigger-mark">A</span>
+      <span class="assistia-trigger-mark" aria-hidden="true">
+        <img class="assistia-logo-image" src="${logoUrl}" alt="" />
+      </span>
       <span>Assistia</span>
     </button>
 
     <section class="assistia-reply-panel" hidden>
       <header class="assistia-reply-head">
         <div class="assistia-brand">
-          <span class="assistia-logo">A</span>
+          <span class="assistia-logo" aria-hidden="true">
+            <img class="assistia-logo-image" src="${logoUrl}" alt="" />
+          </span>
           <div>
             <p class="assistia-reply-title">Assistia</p>
             <p class="assistia-reply-subtitle" data-assistia-status>Prêt dans Gmail</p>

@@ -183,6 +183,17 @@ Le backend a ete simplifie autour du nouveau produit. Les modules Google Calenda
 - Nouveau deploiement production effectue apres correction du dashboard.
 - Tests production valides : `/dashboard`, `/tool`, `/signup` repondent en `200`, et `/api/reply/generate` fonctionne en mode demo.
 
+### 30 avril 2026
+
+- Remplacement des derniers logos temporaires en lettre `A` par le vrai logo Assistia dans le popup Chrome et le panneau Gmail.
+- Ajout des icones Chrome officielles dans `extension/icons/` et declaration dans `extension/manifest.json`.
+- Ajout d'une initialisation explicite de l'icone de barre Chrome via `chrome.action.setIcon`.
+- Ajout du vrai logo comme ressource accessible par le content script Gmail.
+- Correction des logos de la landing et de `/tool` pour ne plus couper la pointe de la bulle.
+- Regeneration du ZIP Chrome `dist/assistia-reply-chrome-v0.3.0.zip` avec les nouveaux assets.
+- Deploiement Vercel effectue apres correction visuelle.
+- Tests production valides : `/` et `/tool` repondent en `200`.
+
 ## Ce qui reste a faire
 
 Priorite courte :

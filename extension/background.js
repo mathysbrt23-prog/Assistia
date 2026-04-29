@@ -1,7 +1,17 @@
 const DEFAULT_APP_URL = "http://localhost:3000";
+const ASSISTIA_ICON_PATHS = {
+  16: "icons/icon16.png",
+  32: "icons/icon32.png",
+  48: "icons/icon48.png",
+  128: "icons/icon128.png"
+};
 
 function normalizeAppUrl(value) {
   return String(value || DEFAULT_APP_URL).trim().replace(/\/$/, "");
+}
+
+function applyAssistiaIcon() {
+  chrome.action.setIcon({ path: ASSISTIA_ICON_PATHS });
 }
 
 async function getSettings() {
@@ -36,11 +46,16 @@ async function callAssistia(path, payload) {
 }
 
 chrome.runtime.onInstalled.addListener(() => {
+  applyAssistiaIcon();
   chrome.storage.sync.get(["assistiaAppUrl"], (stored) => {
     if (!stored.assistiaAppUrl) {
       chrome.storage.sync.set({ assistiaAppUrl: DEFAULT_APP_URL });
     }
   });
+});
+
+chrome.runtime.onStartup.addListener(() => {
+  applyAssistiaIcon();
 });
 
 chrome.runtime.onMessageExternal.addListener((message, sender, sendResponse) => {

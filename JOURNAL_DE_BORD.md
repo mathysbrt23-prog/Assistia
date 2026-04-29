@@ -203,6 +203,13 @@ Le backend a ete simplifie autour du nouveau produit. Les modules Google Calenda
 - Ajout d'une logique de remplacement de l'ancienne interface injectee dans Gmail, afin de supprimer les anciens ronds avec la lettre `A`.
 - Ajout de la permission `scripting` pour reinjecter Assistia depuis le popup sur l'onglet Gmail actif.
 - Regeneration du ZIP Chrome `dist/assistia-reply-chrome-v0.3.2.zip`.
+- Agrandissement des icones de barre Chrome en recadrant autour du symbole Assistia.
+- Passage de l'extension Chrome en version `0.3.3`.
+- Regeneration du ZIP Chrome `dist/assistia-reply-chrome-v0.3.3.zip`.
+- Retour aux icones Chrome non recadrees pour conserver la pointe complete de la bulle.
+- Passage de l'extension Chrome en version `0.3.4`.
+- Agrandissement mesure des icones de barre Chrome sans recadrage : logo complet conserve, pointe visible.
+- Passage de l'extension Chrome en version `0.3.5`.
 
 ## Ce qui reste a faire
 

@@ -81,7 +81,7 @@ STRIPE_PRICE_BUSINESS=
 ## Chrome Web Store
 
 1. Créer le compte Chrome Web Store Developer.
-2. Soumettre `dist/assistia-reply-chrome-v0.3.1.zip`.
+2. Soumettre `dist/assistia-reply-chrome-v0.3.2.zip`.
 3. Utiliser `docs/chrome-store-v1.md` pour la fiche et les justifications.
 4. Renseigner l’URL `/privacy`.
 5. Après création de la fiche, copier l’ID extension et l’URL publique dans Vercel.

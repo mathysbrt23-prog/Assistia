@@ -52,7 +52,7 @@ export function ExtensionConnectCard({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         browser: "chrome",
-        extensionVersion: "0.3.1",
+        extensionVersion: "0.3.2",
         label: chromeExtensionUrl ? "Chrome Web Store" : "Chrome local"
       })
     });
@@ -101,7 +101,7 @@ export function ExtensionConnectCard({
           type: "assistia.connect",
           appUrl: credentials.appUrl,
           token: credentials.token,
-          extensionVersion: "0.3.1"
+          extensionVersion: "0.3.2"
         },
         (response) => {
           if (runtime.lastError || !response?.ok) {

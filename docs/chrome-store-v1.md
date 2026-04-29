@@ -30,6 +30,7 @@ Assistia Reply helps Gmail users generate and rewrite professional email reply d
 | --- | --- |
 | `storage` | Stocker localement l’URL de l’application Assistia et la clé de connexion de l’extension. |
 | `activeTab` | Permettre au popup de demander au content script d’ouvrir le panneau Assistia dans l’onglet Gmail actif. |
+| `scripting` | Réinjecter l’interface Assistia dans l’onglet Gmail actif quand l’utilisateur clique “Ouvrir sur cette page”, notamment après mise à jour de l’extension. |
 | `https://mail.google.com/*` | Afficher le panneau Assistia dans Gmail, lire le contenu visible du mail et insérer le brouillon uniquement après action utilisateur. |
 | Domaine app Assistia | Appeler les API Assistia pour générer une réponse et vérifier la connexion extension. |
 

@@ -1,8 +1,15 @@
 (() => {
-  if (window.__assistiaReplyLoaded) return;
-  window.__assistiaReplyLoaded = true;
+  const EXTENSION_VERSION = "0.3.2";
 
-  const EXTENSION_VERSION = "0.3.1";
+  if (window.__assistiaReplyLoaded && window.__assistiaReplyVersion === EXTENSION_VERSION) return;
+
+  document.querySelectorAll(".assistia-root").forEach((existingRoot) => {
+    existingRoot.remove();
+  });
+
+  window.__assistiaReplyLoaded = true;
+  window.__assistiaReplyVersion = EXTENSION_VERSION;
+
   const STATE = {
     lastOutput: "",
     lastContext: "",

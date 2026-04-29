@@ -199,6 +199,10 @@ Le backend a ete simplifie autour du nouveau produit. Les modules Google Calenda
 - Regeneration des icones Chrome et du ZIP extension avec l'exterieur transparent.
 - Suppression des fonds noirs rectangulaires autour du logo sur la landing, `/tool`, le popup Chrome et le panneau Gmail.
 - Passage de l'extension Chrome en version `0.3.1` pour faciliter le rechargement de la nouvelle icone.
+- Passage de l'extension Chrome en version `0.3.2`.
+- Ajout d'une logique de remplacement de l'ancienne interface injectee dans Gmail, afin de supprimer les anciens ronds avec la lettre `A`.
+- Ajout de la permission `scripting` pour reinjecter Assistia depuis le popup sur l'onglet Gmail actif.
+- Regeneration du ZIP Chrome `dist/assistia-reply-chrome-v0.3.2.zip`.
 
 ## Ce qui reste a faire
 

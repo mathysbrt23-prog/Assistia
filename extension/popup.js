@@ -4,6 +4,7 @@ const save = document.querySelector("[data-save]");
 const dashboard = document.querySelector("[data-dashboard]");
 const openPanel = document.querySelector("[data-open]");
 const status = document.querySelector("[data-status]");
+const EXTENSION_VERSION = "0.3.2";
 
 function normalizeUrl(value) {
   return String(value || "http://localhost:3000").trim().replace(/\/$/, "");
@@ -12,6 +13,21 @@ function normalizeUrl(value) {
 async function currentTab() {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   return tab;
+}
+
+function isGmailTab(tab) {
+  return typeof tab?.url === "string" && tab.url.startsWith("https://mail.google.com/");
+}
+
+async function injectAssistia(tabId) {
+  await chrome.scripting.insertCSS({
+    target: { tabId },
+    files: ["content.css"]
+  });
+  await chrome.scripting.executeScript({
+    target: { tabId },
+    files: ["content.js"]
+  });
 }
 
 chrome.storage.sync.get(["assistiaAppUrl", "assistiaExtensionToken"], (stored) => {
@@ -33,7 +49,7 @@ save.addEventListener("click", async () => {
       type: "assistia.ping",
       payload: {
         source: "popup",
-        extensionVersion: "0.3.1"
+        extensionVersion: EXTENSION_VERSION
       }
     },
     (response) => {
@@ -52,6 +68,18 @@ dashboard.addEventListener("click", () => {
 openPanel.addEventListener("click", async () => {
   const tab = await currentTab();
   if (!tab?.id) return;
+  if (!isGmailTab(tab)) {
+    status.textContent = "Ouvre Gmail pour afficher Assistia sur la page.";
+    return;
+  }
+
+  try {
+    await injectAssistia(tab.id);
+  } catch {
+    status.textContent = "Impossible d’injecter Assistia. Recharge Gmail puis réessaie.";
+    return;
+  }
+
   chrome.tabs.sendMessage(tab.id, { type: "assistia.open" }, () => {
     if (chrome.runtime.lastError) {
       status.textContent = "Ouvre Gmail puis recharge la page.";

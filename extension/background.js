@@ -78,7 +78,7 @@ chrome.runtime.onMessageExternal.addListener((message, sender, sendResponse) => 
 
       const data = await callAssistia("/api/extension/ping", {
         source: "external-connect",
-        extensionVersion: String(message.extensionVersion || "0.3.1"),
+        extensionVersion: String(message.extensionVersion || "0.3.2"),
         location: sender?.url || undefined
       });
 

@@ -13,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr">
+    <html data-scroll-behavior="smooth" lang="fr">
       <body>{children}</body>
     </html>
   );

@@ -11,7 +11,10 @@ export function PricingCards() {
   const [error, setError] = useState<string | null>(null);
 
   async function startCheckout(plan: string) {
-    if (plan === "free") return;
+    if (plan === "free") {
+      window.location.href = "/tool";
+      return;
+    }
     setLoadingPlan(plan);
     setError(null);
 
@@ -64,15 +67,15 @@ export function PricingCards() {
           <Button
             className="mt-7 w-full"
             onClick={() => startCheckout(plan.id)}
-            disabled={loadingPlan !== null || plan.id === "free"}
+            disabled={loadingPlan !== null}
             variant={plan.id === "pro" ? "primary" : "secondary"}
           >
             {loadingPlan === plan.id ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-            {plan.id === "free" ? "Inclus" : `Choisir ${plan.name}`}
+            {plan.id === "free" ? "Commencer" : `Choisir ${plan.name}`}
           </Button>
           {plan.id === "free" ? (
-            <Link className="mt-3 text-center text-sm font-semibold text-moss" href="/signup">
-              Créer un compte gratuit
+            <Link className="mt-3 text-center text-sm font-semibold text-moss" href="/tool">
+              Tester l’outil gratuitement
             </Link>
           ) : null}
         </article>

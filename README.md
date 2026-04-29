@@ -16,6 +16,7 @@ Le produit ne remplace pas les apps de messagerie. Il ajoute un copilote discret
 ## Fonctionnalités actuelles
 
 - Landing page premium dark pour Assistia Reply
+- Page `/tool` reliée aux CTA de la landing : test web + installation extension
 - Inscription / connexion email-password et Google via Supabase Auth
 - Dashboard utilisateur
 - Préférences de réponse : ton, langue, rétention
@@ -147,10 +148,10 @@ Réponse :
 ## 5. Tester le produit
 
 1. Lance `pnpm dev`.
-2. Crée un compte sur `/signup`.
-3. Va sur `/dashboard`.
-4. Configure le ton par défaut.
-5. Dans le bloc “Installer l’extension”, génère une clé extension.
+2. Clique sur “Essayer gratuitement” depuis la landing, ou va sur `/tool`.
+3. Crée un compte si Supabase est configuré. Sans Supabase, `/tool` passe en mode local de démonstration.
+4. Teste une réponse directement dans l’outil web.
+5. Dans le bloc “Ajouter l’extension”, génère une clé extension.
 6. Charge le dossier `extension/` dans Chrome depuis `chrome://extensions`.
 7. Ouvre le popup Assistia, colle l’URL app et la clé extension, puis enregistre.
 8. Ouvre un mail dans Gmail, clique sur Assistia, écris ton idée de réponse et génère.

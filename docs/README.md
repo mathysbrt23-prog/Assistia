@@ -20,6 +20,7 @@ Ce dossier contient uniquement les documents utiles au projet actuel.
 Le dossier est maintenant centré sur Assistia Reply :
 
 - extension Chrome pour Gmail et WhatsApp Web ;
+- page `/tool` comme point d'entrée produit depuis la landing ;
 - API `/api/reply/generate` ;
 - API `/api/extension/token` pour connecter l'extension au compte utilisateur ;
 - dashboard d'usage et de préférences ;

@@ -23,8 +23,8 @@ export default function OnboardingPage() {
   return (
     <main className="min-h-screen bg-fog px-5 py-12 text-ink">
       <div className="mx-auto max-w-5xl">
-        <ButtonLink href="/dashboard" variant="ghost">
-          Retour dashboard
+        <ButtonLink href="/tool" variant="ghost">
+          Retour outil
         </ButtonLink>
         <div className="mt-12 max-w-2xl">
           <p className="text-sm font-bold uppercase text-moss">Onboarding</p>
@@ -44,8 +44,8 @@ export default function OnboardingPage() {
           ))}
         </div>
         <div className="mt-8">
-          <ButtonLink href="/dashboard">
-            Ouvrir le dashboard
+          <ButtonLink href="/tool">
+            Ouvrir l’outil
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </ButtonLink>
         </div>

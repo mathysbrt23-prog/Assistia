@@ -360,7 +360,7 @@ export default function LandingPage() {
           </nav>
           <Link
             className="rounded-full border border-white/12 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white hover:text-black"
-            href="/signup"
+            href="/tool"
           >
             Essayer
           </Link>
@@ -393,7 +393,7 @@ export default function LandingPage() {
               WhatsApp Web.
             </motion.p>
             <motion.div className="mt-9 flex flex-col gap-3 sm:flex-row" variants={fadeUp}>
-              <PrimaryLink href="/signup">
+              <PrimaryLink href="/tool">
                 <WhatsAppLogo />
                 Essayer gratuitement
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -620,7 +620,7 @@ export default function LandingPage() {
                   </ul>
                   <Link
                     className="mt-auto inline-flex h-11 items-center justify-center rounded-full bg-white text-sm font-semibold text-black transition hover:bg-[#25D366]"
-                    href="/signup"
+                    href="/tool"
                   >
                     {offer.cta}
                   </Link>

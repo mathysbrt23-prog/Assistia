@@ -151,11 +151,14 @@ Le backend a ete simplifie autour du nouveau produit. Les modules Google Calenda
 ### 29 avril 2026
 
 - Passage de la landing au debut d'outil fonctionnel.
+- Creation de la page `/tool`, reliee aux CTA de la landing, pour tester Assistia directement et installer l'extension.
+- Ajout d'un mode local de demonstration quand Supabase/OpenAI ne sont pas encore configures, afin que la landing n'envoie jamais vers une erreur serveur.
 - Ajout d'une connexion extension via cle generee depuis le dashboard, afin de ne pas dependre uniquement des cookies Supabase dans Chrome.
 - Ajout des routes API `/api/extension/token` et `/api/extension/ping`.
 - Mise a jour de `/api/reply/generate` pour accepter les appels authentifies depuis l'extension.
 - Refonte du prototype Chrome : popup de configuration, panneau Assistia dans Gmail, lecture du mail visible, zone d'intention, generation/reformulation, copie et insertion dans Gmail sans envoi automatique.
 - Mise a jour du schema Supabase pour stocker les cles extension sous forme de hash.
+- Tous les boutons principaux de la landing ("Essayer", "Essayer gratuitement", "Commencer") pointent maintenant vers `/tool`.
 
 ## Ce qui reste a faire
 

@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import {
   AlertTriangle,
+  ArrowRight,
   CheckCircle2,
   Chrome,
   CreditCard,
@@ -148,7 +149,16 @@ export default async function DashboardPage() {
             <h1 className="mt-1 text-3xl font-bold">Dashboard</h1>
             <p className="mt-1 text-sm text-zinc-600">{user.email}</p>
           </div>
-          <SignOutButton />
+          <div className="flex flex-wrap gap-2">
+            <a
+              className="focus-ring inline-flex h-11 items-center justify-center gap-2 rounded-md border border-line bg-white px-4 text-sm font-semibold text-ink transition hover:border-ink hover:bg-fog"
+              href="/tool"
+            >
+              Ouvrir l’outil
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </a>
+            <SignOutButton />
+          </div>
         </div>
       </header>
 

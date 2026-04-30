@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Assistia Reply - Réponses professionnelles dans Gmail",
+  title: "Assistia",
   description:
     "Génère ou reformule des brouillons professionnels en français directement dans Gmail."
 };

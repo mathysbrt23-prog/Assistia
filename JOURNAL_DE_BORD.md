@@ -70,11 +70,11 @@ Mobile :
 
 Le dossier projet est sur le Bureau :
 
-`/Users/mathys/Desktop/Codex`
+`~/Desktop/Codex`
 
 Un lien existe aussi depuis l'ancien chemin pour que Codex retrouve le projet :
 
-`/Users/mathys/Documents/Codex -> /Users/mathys/Desktop/Codex`
+`~/Documents/Codex -> ~/Desktop/Codex`
 
 Le dossier a ete nettoye :
 
@@ -221,7 +221,7 @@ Le backend a ete simplifie autour du nouveau produit. Les modules Google Calenda
 - Suppression de la partie test web de `/tool` : l'utilisateur est maintenant guide uniquement vers l'installation et la connexion de l'extension.
 - Remplacement de l'erreur rouge Supabase sur l'inscription locale par un mode "installation bêta locale".
 - Ajout d'un ping extension compatible local sans clé quand Supabase n'est pas configure.
-- Configuration Supabase production sur le projet existant `mathysbrt23-prog's Project` (`qhyysrlgxocepahrjyaz`) apres blocage de creation d'un nouveau projet par la limite du plan gratuit.
+- Configuration Supabase production sur le projet existant (`qhyysrlgxocepahrjyaz`) apres blocage de creation d'un nouveau projet par la limite du plan gratuit.
 - Execution du schema `supabase/schema.sql` sur Supabase production.
 - Ajout des variables Supabase dans Vercel production et creation du fichier local `.env.local`.
 - Configuration des URLs Auth Supabase : site URL Vercel + redirections Vercel et localhost autorisees.

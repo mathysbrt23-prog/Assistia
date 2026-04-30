@@ -7,7 +7,7 @@ import { ButtonLink } from "@/components/ui/button";
 import { SignOutButton } from "@/components/dashboard/dashboard-actions";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
-const localExtensionPath = "/Users/mathys/Desktop/Codex/extension";
+const localExtensionPath = "dossier extension du projet Assistia";
 
 function AssistiaLogo() {
   return (

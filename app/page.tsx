@@ -109,24 +109,42 @@ const pricing = [
   {
     name: "Free",
     price: "0€",
-    description: "Pour installer Assistia et l’utiliser dans Gmail.",
-    items: ["20 réponses par mois", "Extension Gmail", "Installation guidée"],
-    cta: "Installer"
+    quota: "3",
+    unit: "réponses / jour",
+    description: "Pour tester Assistia dans Gmail sans carte bancaire.",
+    items: [
+      "Extension Gmail incluse",
+      "Génération depuis le contexte du mail",
+      "Blocage 24h une fois le quota atteint"
+    ],
+    cta: "Commencer gratuitement"
   },
   {
-    name: "Pro",
-    price: "9€",
-    description: "Pour répondre mieux et plus vite chaque semaine.",
-    items: ["1 000 réponses par mois", "Extension Gmail", "Tons professionnels"],
-    cta: "Installer Pro",
+    name: "Essential",
+    price: "4,99€",
+    quota: "40",
+    unit: "réponses / jour",
+    description: "Pour les freelances et pros qui traitent leurs mails tous les jours.",
+    items: [
+      "Même extension Gmail",
+      "Tous les tons de réponse",
+      "Quota confortable pour un usage quotidien"
+    ],
+    cta: "Choisir Essential",
     featured: true
   },
   {
-    name: "Team",
-    price: "29€",
-    description: "Pour harmoniser les réponses d’une petite équipe.",
-    items: ["3 utilisateurs inclus", "Ton de marque partagé", "Usage équipe"],
-    cta: "Choisir Team"
+    name: "Pro",
+    price: "19,99€",
+    quota: "200",
+    unit: "réponses / jour",
+    description: "Pour les profils sales, fondateurs et équipes qui répondent en volume.",
+    items: [
+      "Même extension Gmail",
+      "Tous les tons de réponse",
+      "Volume pro pour relances, support et prospection"
+    ],
+    cta: "Choisir Pro"
   }
 ];
 
@@ -515,9 +533,9 @@ function SecuritySection() {
 function PricingSection() {
   return (
     <section className="border-t border-white/10 px-5 py-24 sm:px-8" id="prix">
-      <SectionHeading eyebrow="Prix" title="Simple à installer. Facile à rentabiliser.">
-        L’objectif du pricing est clair : installer vite, puis devenir un réflexe quotidien pour
-        les professionnels qui répondent beaucoup.
+      <SectionHeading eyebrow="Prix" title="Même produit. Plus de réponses quand tu en as besoin.">
+        Toutes les offres donnent accès à Assistia dans Gmail. La seule vraie différence est le
+        quota quotidien, avec une fenêtre glissante de 24 heures.
       </SectionHeading>
 
       <div className="mx-auto mt-14 grid max-w-6xl gap-4 lg:grid-cols-3">
@@ -538,7 +556,7 @@ function PricingSection() {
               <h3 className="text-xl font-semibold text-white">{plan.name}</h3>
               {plan.featured ? (
                 <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-black">
-                  Recommandé
+                  Populaire
                 </span>
               ) : null}
             </div>
@@ -547,6 +565,15 @@ function PricingSection() {
               <span className="pb-2 text-sm text-zinc-500">/ mois</span>
             </div>
             <p className="mt-4 min-h-12 text-sm leading-6 text-zinc-400">{plan.description}</p>
+            <div className="mt-6 rounded-2xl border border-white/10 bg-black/30 p-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">
+                Quota inclus
+              </p>
+              <div className="mt-3 flex items-end gap-2">
+                <span className="text-4xl font-semibold text-white">{plan.quota}</span>
+                <span className="pb-1 text-sm font-medium text-zinc-400">{plan.unit}</span>
+              </div>
+            </div>
             <ul className="mt-6 space-y-3">
               {plan.items.map((item) => (
                 <li className="flex items-start gap-3 text-sm text-zinc-300" key={item}>
@@ -568,6 +595,11 @@ function PricingSection() {
           </motion.div>
         ))}
       </div>
+
+      <p className="mx-auto mt-8 max-w-3xl text-center text-sm leading-6 text-zinc-500">
+        Quand le quota du jour est atteint, Assistia se met en pause jusqu’à la prochaine fenêtre de
+        24 heures. L’utilisateur peut continuer à lire et modifier ses brouillons existants.
+      </p>
     </section>
   );
 }

@@ -214,6 +214,7 @@ Le backend a ete simplifie autour du nouveau produit. Les modules Google Calenda
 - Passage de l'extension Chrome en version `0.3.6`.
 - Passage landing, outil web et extension Gmail sur une direction noir/blanc : suppression de l'accent vert principal.
 - Passage de l'extension Chrome en version `0.3.7`.
+- Suppression de deux sections de la landing page : "Le vrai problème" et "Cible", pour garder une page plus directe.
 
 ## Ce qui reste a faire
 

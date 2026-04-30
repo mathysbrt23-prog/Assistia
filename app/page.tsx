@@ -16,8 +16,7 @@ import {
   PenLine,
   ShieldCheck,
   Sparkles,
-  Wand2,
-  Zap
+  Wand2
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
@@ -43,21 +42,6 @@ const proofPoints = [
   "Pensé pour Gmail",
   "Extension Chrome",
   "Essai immédiat"
-];
-
-const painPoints = [
-  {
-    title: "Le contexte est dispersé",
-    text: "Un mail ouvert, une intention dans la tête, puis un détour par ChatGPT pour reformuler."
-  },
-  {
-    title: "Les réponses prennent trop de temps",
-    text: "Le fond est souvent simple, mais le ton, la structure et la nuance ralentissent tout."
-  },
-  {
-    title: "Les outils IA ne sont pas au bon endroit",
-    text: "Ils aident à écrire, mais ils forcent encore à copier, coller, relire et réadapter."
-  }
 ];
 
 const features: Array<{ icon: LucideIcon; title: string; text: string }> = [
@@ -117,13 +101,6 @@ const demos = [
     answer:
       "Merci beaucoup pour ta proposition. Ce n’est pas le bon moment pour nous engager maintenant, mais je serais ravi de garder le contact pour une future opportunité."
   }
-];
-
-const targetUsers = [
-  "Freelances qui répondent à des prospects",
-  "Fondateurs qui gèrent tout eux-mêmes",
-  "Sales qui relancent sans perdre le ton",
-  "Support client qui veut aller vite sans sonner robotique"
 ];
 
 const pricing = [
@@ -383,36 +360,6 @@ function ProofStrip() {
   );
 }
 
-function ProblemSection() {
-  return (
-    <section className="border-t border-white/10 px-5 py-24 sm:px-8">
-      <SectionHeading eyebrow="Le vrai problème" title="Écrire n’est pas difficile. Répondre juste l’est.">
-        Les professionnels savent ce qu’ils veulent dire. Ce qui coûte du temps, c’est de trouver le
-        bon ton, la bonne longueur et la bonne formulation sans sortir de leur outil de travail.
-      </SectionHeading>
-
-      <div className="mx-auto mt-14 grid max-w-6xl gap-4 md:grid-cols-3">
-        {painPoints.map((item) => (
-          <motion.div
-            className="rounded-2xl border border-white/10 bg-white/[0.035] p-6"
-            initial="hidden"
-            key={item.title}
-            variants={reveal}
-            viewport={{ once: true, margin: "-80px" }}
-            whileInView="visible"
-          >
-            <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-full bg-white/[0.06] text-white">
-              <Zap className="h-5 w-5" aria-hidden="true" />
-            </div>
-            <h3 className="text-lg font-semibold text-white">{item.title}</h3>
-            <p className="mt-3 text-sm leading-6 text-zinc-400">{item.text}</p>
-          </motion.div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
 function ProductSection() {
   return (
     <section className="px-5 py-24 sm:px-8" id="produit">
@@ -557,38 +504,6 @@ function SecuritySection() {
               </div>
             </motion.div>
           ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function AudienceSection() {
-  return (
-    <section className="px-5 py-24 sm:px-8">
-      <div className="mx-auto max-w-6xl">
-        <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white">Cible</p>
-            <h2 className="mt-4 text-3xl font-semibold text-white sm:text-4xl">
-              Pour ceux qui vivent dans leur inbox.
-            </h2>
-            <p className="mt-5 text-base leading-7 text-zinc-400">
-              Assistia est le plus utile quand chaque réponse peut faire avancer un deal, rassurer un
-              client ou éviter un malentendu.
-            </p>
-          </div>
-          <div className="grid gap-3 sm:grid-cols-2">
-            {targetUsers.map((user) => (
-              <div
-                className="flex min-h-24 items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.035] p-5"
-                key={user}
-              >
-                <Check className="mt-0.5 h-5 w-5 shrink-0 text-white" aria-hidden="true" />
-                <p className="text-sm leading-6 text-zinc-300">{user}</p>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </section>
@@ -747,12 +662,10 @@ export default function Home() {
         </div>
       </section>
 
-      <ProblemSection />
       <ProductSection />
       <WorkflowSection />
       <DemoSection />
       <SecuritySection />
-      <AudienceSection />
       <PricingSection />
       <FinalCTA />
 

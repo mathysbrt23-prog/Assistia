@@ -6,7 +6,7 @@ const requiredFiles = [
   "app/privacy/page.tsx",
   "app/terms/page.tsx",
   "supabase/schema.sql",
-  "dist/assistia-reply-chrome-v0.3.5.zip",
+  "dist/assistia-reply-chrome-v0.3.7.zip",
   "docs/chrome-store-v1.md"
 ];
 
@@ -35,7 +35,7 @@ for (const file of requiredFiles) {
 
 const manifest = readJson("extension/manifest.json");
 if (manifest.manifest_version !== 3) failures.push("Le manifest Chrome doit rester en Manifest V3.");
-if (manifest.version !== "0.3.5") failures.push("La version extension attendue est 0.3.5.");
+if (manifest.version !== "0.3.7") failures.push("La version extension attendue est 0.3.7.");
 const matches = manifest.content_scripts?.flatMap((script) => script.matches || []) || [];
 if (matches.length !== 1 || matches[0] !== "https://mail.google.com/*") {
   failures.push("La v1 Chrome Store doit être limitée à Gmail uniquement.");

@@ -175,7 +175,7 @@ function ButtonLink({
 }) {
   const style =
     variant === "primary"
-      ? "bg-white text-black hover:bg-[#25D366]"
+      ? "bg-white text-black hover:bg-zinc-200"
       : "border border-white/10 bg-white/[0.04] text-white hover:border-white/20 hover:bg-white/[0.08]";
 
   return (
@@ -205,7 +205,7 @@ function SectionHeading({
       viewport={{ once: true, margin: "-80px" }}
       whileInView="visible"
     >
-      <motion.p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#25D366]" variants={reveal}>
+      <motion.p className="text-sm font-semibold uppercase tracking-[0.18em] text-white" variants={reveal}>
         {eyebrow}
       </motion.p>
       <motion.h2 className="mt-4 text-3xl font-semibold text-white sm:text-4xl lg:text-5xl" variants={reveal}>
@@ -240,7 +240,7 @@ function Header() {
         </Link>
       </nav>
       <Link
-        className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full bg-white px-4 text-sm font-semibold text-black transition hover:bg-[#25D366]"
+        className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full bg-white px-4 text-sm font-semibold text-black transition hover:bg-zinc-200"
         href="/tool"
       >
         Essayer
@@ -282,12 +282,12 @@ function HeroWorkspace() {
             {["Boîte de réception", "Messages suivis", "Envoyés", "Brouillons"].map((item, index) => (
               <div
                 className={`mb-2 flex items-center justify-between rounded-xl px-3 py-2.5 text-sm ${
-                  index === 0 ? "bg-[#25D366]/10 text-white" : "text-zinc-500"
+                  index === 0 ? "bg-white/[0.07] text-white" : "text-zinc-500"
                 }`}
                 key={item}
               >
                 <span>{item}</span>
-                {index === 0 ? <span className="text-xs text-[#25D366]">12</span> : null}
+                {index === 0 ? <span className="text-xs text-white">12</span> : null}
               </div>
             ))}
           </aside>
@@ -322,7 +322,7 @@ function HeroWorkspace() {
             </div>
 
             <motion.div
-              className="mx-auto mt-2 w-full max-w-[440px] rounded-[24px] border border-[#25D366]/30 bg-[#0C1110]/95 p-4 shadow-[0_28px_90px_rgba(0,0,0,0.55)] backdrop-blur-xl lg:absolute lg:right-7 lg:top-24"
+              className="mx-auto mt-2 w-full max-w-[440px] rounded-[24px] border border-white/15 bg-[#0D0D0F]/95 p-4 shadow-[0_28px_90px_rgba(0,0,0,0.55)] backdrop-blur-xl lg:absolute lg:right-7 lg:top-24"
               variants={reveal}
             >
               <div className="flex items-center gap-3 border-b border-white/10 pb-4">
@@ -331,7 +331,7 @@ function HeroWorkspace() {
                   <p className="font-semibold text-white">Assistia</p>
                   <p className="text-xs text-zinc-500">Réponse professionnelle</p>
                 </div>
-                <Sparkles className="h-5 w-5 text-[#25D366]" aria-hidden="true" />
+                <Sparkles className="h-5 w-5 text-white" aria-hidden="true" />
               </div>
 
               <div className="mt-4">
@@ -342,8 +342,8 @@ function HeroWorkspace() {
               </div>
 
               <div className="mt-4">
-                <p className="mb-2 text-xs font-semibold uppercase text-[#25D366]">Brouillon proposé</p>
-                <div className="rounded-2xl border border-[#25D366]/25 bg-[#25D366]/10 p-3 text-sm leading-6 text-zinc-100">
+                <p className="mb-2 text-xs font-semibold uppercase text-white">Brouillon proposé</p>
+                <div className="rounded-2xl border border-white/15 bg-white/[0.06] p-3 text-sm leading-6 text-zinc-100">
                   Bonjour Léo, merci pour ton retour. Je comprends votre point sur le budget. La
                   proposition reflète le niveau d’accompagnement prévu, mais je serais ravi d’en
                   discuter demain pour ajuster le périmètre si besoin.
@@ -401,7 +401,7 @@ function ProblemSection() {
             viewport={{ once: true, margin: "-80px" }}
             whileInView="visible"
           >
-            <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-full bg-[#25D366]/10 text-[#25D366]">
+            <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-full bg-white/[0.06] text-white">
               <Zap className="h-5 w-5" aria-hidden="true" />
             </div>
             <h3 className="text-lg font-semibold text-white">{item.title}</h3>
@@ -433,7 +433,7 @@ function ProductSection() {
               viewport={{ once: true, margin: "-80px" }}
               whileInView="visible"
             >
-              <Icon className="h-6 w-6 text-[#25D366]" aria-hidden="true" />
+              <Icon className="h-6 w-6 text-white" aria-hidden="true" />
               <h3 className="mt-5 text-xl font-semibold text-white">{feature.title}</h3>
               <p className="mt-3 text-sm leading-6 text-zinc-400">{feature.text}</p>
             </motion.div>
@@ -462,7 +462,7 @@ function WorkflowSection() {
             viewport={{ once: true, margin: "-80px" }}
             whileInView="visible"
           >
-            <span className="text-sm font-semibold text-[#25D366]">{item.step}</span>
+            <span className="text-sm font-semibold text-white">{item.step}</span>
             <h3 className="mt-8 text-xl font-semibold text-white">{item.title}</h3>
             <p className="mt-3 text-sm leading-6 text-zinc-400">{item.text}</p>
           </motion.div>
@@ -497,8 +497,8 @@ function DemoSection() {
               </div>
               <p className="text-sm leading-6 text-zinc-300">{demo.request}</p>
             </div>
-            <div className="rounded-xl border border-[#25D366]/20 bg-[#25D366]/10 p-4">
-              <div className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase text-[#25D366]">
+            <div className="rounded-xl border border-white/15 bg-white/[0.06] p-4">
+              <div className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase text-white">
                 <CopyCheck className="h-4 w-4" aria-hidden="true" />
                 Brouillon Assistia
               </div>
@@ -521,7 +521,7 @@ function SecuritySection() {
           viewport={{ once: true, margin: "-80px" }}
           whileInView="visible"
         >
-          <motion.p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#25D366]" variants={reveal}>
+          <motion.p className="text-sm font-semibold uppercase tracking-[0.18em] text-white" variants={reveal}>
             Sécurité
           </motion.p>
           <motion.h2 className="mt-4 text-3xl font-semibold text-white sm:text-4xl lg:text-5xl" variants={reveal}>
@@ -548,7 +548,7 @@ function SecuritySection() {
               viewport={{ once: true, margin: "-80px" }}
               whileInView="visible"
             >
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#25D366]/10 text-[#25D366]">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/[0.06] text-white">
                 <LockKeyhole className="h-5 w-5" aria-hidden="true" />
               </div>
               <div>
@@ -569,7 +569,7 @@ function AudienceSection() {
       <div className="mx-auto max-w-6xl">
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#25D366]">Cible</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white">Cible</p>
             <h2 className="mt-4 text-3xl font-semibold text-white sm:text-4xl">
               Pour ceux qui vivent dans leur inbox.
             </h2>
@@ -584,7 +584,7 @@ function AudienceSection() {
                 className="flex min-h-24 items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.035] p-5"
                 key={user}
               >
-                <Check className="mt-0.5 h-5 w-5 shrink-0 text-[#25D366]" aria-hidden="true" />
+                <Check className="mt-0.5 h-5 w-5 shrink-0 text-white" aria-hidden="true" />
                 <p className="text-sm leading-6 text-zinc-300">{user}</p>
               </div>
             ))}
@@ -608,7 +608,7 @@ function PricingSection() {
           <motion.div
             className={`rounded-2xl border p-6 ${
               plan.featured
-                ? "border-[#25D366]/40 bg-[#25D366]/10"
+                ? "border-white/30 bg-white/[0.07]"
                 : "border-white/10 bg-white/[0.035]"
             }`}
             initial="hidden"
@@ -620,7 +620,7 @@ function PricingSection() {
             <div className="flex items-center justify-between gap-4">
               <h3 className="text-xl font-semibold text-white">{plan.name}</h3>
               {plan.featured ? (
-                <span className="rounded-full bg-[#25D366] px-3 py-1 text-xs font-semibold text-black">
+                <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-black">
                   Recommandé
                 </span>
               ) : null}
@@ -633,7 +633,7 @@ function PricingSection() {
             <ul className="mt-6 space-y-3">
               {plan.items.map((item) => (
                 <li className="flex items-start gap-3 text-sm text-zinc-300" key={item}>
-                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#25D366]" aria-hidden="true" />
+                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-white" aria-hidden="true" />
                   {item}
                 </li>
               ))}
@@ -641,7 +641,7 @@ function PricingSection() {
             <Link
               className={`mt-8 inline-flex min-h-11 w-full items-center justify-center rounded-full text-sm font-semibold transition ${
                 plan.featured
-                  ? "bg-white text-black hover:bg-[#25D366]"
+                  ? "bg-white text-black hover:bg-zinc-200"
                   : "border border-white/10 bg-white/[0.04] text-white hover:bg-white/[0.08]"
               }`}
               href="/tool"
@@ -689,7 +689,7 @@ export default function Home() {
       <section className="relative border-b border-white/10">
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-[linear-gradient(180deg,rgba(37,211,102,0.12),rgba(3,3,3,0)_34%),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:100%_100%,80px_80px,80px_80px]"
+          className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.10),rgba(3,3,3,0)_34%),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:100%_100%,80px_80px,80px_80px]"
         />
         <Header />
 
@@ -699,7 +699,7 @@ export default function Home() {
               className="mx-auto mb-7 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.045] px-4 py-2 text-sm text-zinc-300"
               variants={reveal}
             >
-              <Gauge className="h-4 w-4 text-[#25D366]" aria-hidden="true" />
+              <Gauge className="h-4 w-4 text-white" aria-hidden="true" />
               L’assistant de réponse qui vit dans Gmail
             </motion.div>
             <motion.h1

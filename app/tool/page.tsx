@@ -46,7 +46,7 @@ export default async function ToolPage() {
       <section className="relative border-b border-white/10">
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-[linear-gradient(180deg,rgba(37,211,102,0.13),rgba(3,3,3,0)_42%),linear-gradient(90deg,rgba(255,255,255,0.045)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:100%_100%,80px_80px,80px_80px]"
+          className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.10),rgba(3,3,3,0)_42%),linear-gradient(90deg,rgba(255,255,255,0.045)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:100%_100%,80px_80px,80px_80px]"
         />
 
         <header className="relative z-10 mx-auto flex max-w-7xl items-center justify-between px-5 py-6 sm:px-8">
@@ -77,7 +77,7 @@ export default async function ToolPage() {
         <div className="relative z-10 mx-auto max-w-7xl px-5 pb-12 pt-10 sm:px-8 sm:pb-16 sm:pt-16">
           <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-end">
             <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#25D366]">
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white">
                 Assistia Reply
               </p>
               <h1 className="mt-4 max-w-3xl text-4xl font-semibold leading-tight text-white sm:text-6xl">
@@ -97,7 +97,7 @@ export default async function ToolPage() {
                 "Ouvrir Gmail et générer un brouillon"
               ].map((item) => (
                 <div className="flex items-center gap-3 rounded-2xl bg-black/30 p-3 text-sm text-zinc-300" key={item}>
-                  <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#25D366]/10 text-[#25D366]">
+                  <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white/[0.08] text-white">
                     <Check className="h-4 w-4" aria-hidden="true" />
                   </span>
                   {item}

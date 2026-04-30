@@ -68,11 +68,11 @@ export function ReplyTool() {
   return (
     <section className="rounded-[28px] border border-white/10 bg-white/[0.04] p-5 shadow-[0_24px_80px_rgba(0,0,0,0.35)]">
       <div className="mb-5 flex items-center gap-3">
-        <span className="grid h-11 w-11 place-items-center rounded-2xl bg-[#25D366]/10 text-[#25D366]">
+        <span className="grid h-11 w-11 place-items-center rounded-2xl bg-white/[0.08] text-white">
           <Wand2 className="h-5 w-5" aria-hidden="true" />
         </span>
         <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#25D366]">Test web</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white">Test web</p>
           <h2 className="mt-1 text-2xl font-semibold text-white">Tester Assistia</h2>
           <p className="mt-1 text-sm text-zinc-400">Colle un mail, écris ton intention, récupère une réponse prête.</p>
         </div>
@@ -118,7 +118,11 @@ export function ReplyTool() {
           </p>
         ) : null}
 
-        <Button className="h-12 rounded-2xl" disabled={loading || instruction.length < 2} type="submit">
+        <Button
+          className="h-12 rounded-2xl bg-white text-black hover:bg-zinc-200"
+          disabled={loading || instruction.length < 2}
+          type="submit"
+        >
           {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
           Générer une réponse
         </Button>

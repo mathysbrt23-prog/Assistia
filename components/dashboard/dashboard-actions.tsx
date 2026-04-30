@@ -148,7 +148,7 @@ export function ExtensionTokenGenerator() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         browser: "chrome",
-        extensionVersion: "0.3.5",
+        extensionVersion: "0.3.7",
         label: "Chrome local"
       })
     });

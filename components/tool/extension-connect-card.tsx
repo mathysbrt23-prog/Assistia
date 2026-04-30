@@ -52,7 +52,7 @@ export function ExtensionConnectCard({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         browser: "chrome",
-        extensionVersion: "0.3.5",
+        extensionVersion: "0.3.7",
         label: chromeExtensionUrl ? "Chrome Web Store" : "Chrome local"
       })
     });
@@ -101,7 +101,7 @@ export function ExtensionConnectCard({
           type: "assistia.connect",
           appUrl: credentials.appUrl,
           token: credentials.token,
-          extensionVersion: "0.3.5"
+          extensionVersion: "0.3.7"
         },
         (response) => {
           if (runtime.lastError || !response?.ok) {
@@ -138,11 +138,11 @@ export function ExtensionConnectCard({
   return (
     <section className="rounded-[28px] border border-white/10 bg-white/[0.04] p-5 shadow-[0_24px_80px_rgba(0,0,0,0.35)]">
       <div className="flex items-start gap-4">
-        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-[#25D366]/10 text-[#25D366]">
+        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-white/[0.08] text-white">
           <Chrome className="h-5 w-5" aria-hidden="true" />
         </span>
         <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#25D366]">Extension</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white">Extension</p>
           <h2 className="mt-2 text-2xl font-semibold text-white">Installer et connecter Assistia</h2>
           <p className="mt-2 text-sm leading-6 text-zinc-400">
             Le parcours cible est simple : installer l’extension, créer le compte, connecter
@@ -190,8 +190,8 @@ export function ExtensionConnectCard({
             <h3 className="font-semibold text-white">Créer ton compte</h3>
           </div>
           {isAuthenticated ? (
-            <div className="flex items-center gap-3 rounded-xl border border-[#25D366]/30 bg-[#25D366]/10 p-3 text-sm text-zinc-100">
-              <Check className="h-4 w-4 text-[#25D366]" aria-hidden="true" />
+            <div className="flex items-center gap-3 rounded-xl border border-white/20 bg-white/[0.06] p-3 text-sm text-zinc-100">
+              <Check className="h-4 w-4 text-white" aria-hidden="true" />
               Compte connecté.
             </div>
           ) : hasSupabaseConfig ? (
@@ -213,7 +213,12 @@ export function ExtensionConnectCard({
             </span>
             <h3 className="font-semibold text-white">Connecter l’extension</h3>
           </div>
-          <Button disabled={status === "loading"} onClick={connectAutomatically} type="button" className="w-full">
+          <Button
+            disabled={status === "loading"}
+            onClick={connectAutomatically}
+            type="button"
+            className="w-full bg-white text-black hover:bg-zinc-200"
+          >
             {status === "loading" ? <Loader2 className="h-4 w-4 animate-spin" /> : <KeyRound className="h-4 w-4" />}
             {chromeExtensionId ? "Connecter automatiquement" : "Générer la clé de connexion"}
           </Button>
@@ -222,7 +227,7 @@ export function ExtensionConnectCard({
             <p
               className={`mt-3 rounded-xl border p-3 text-sm leading-6 ${
                 status === "connected"
-                  ? "border-[#25D366]/30 bg-[#25D366]/10 text-zinc-100"
+                  ? "border-white/20 bg-white/[0.06] text-zinc-100"
                   : "border-white/10 bg-[#050505] text-zinc-300"
               }`}
             >
@@ -269,7 +274,7 @@ export function ExtensionConnectCard({
               Ouvrir Gmail
             </Link>
             <div className="flex items-center gap-2 rounded-md border border-white/10 bg-white/[0.035] px-3 text-xs leading-5 text-zinc-400">
-              <ShieldCheck className="h-4 w-4 shrink-0 text-[#25D366]" aria-hidden="true" />
+              <ShieldCheck className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
               Assistia prépare seulement un brouillon.
             </div>
           </div>

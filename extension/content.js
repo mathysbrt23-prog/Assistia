@@ -1,5 +1,5 @@
 (() => {
-  const EXTENSION_VERSION = "0.3.5";
+  const EXTENSION_VERSION = "0.3.7";
 
   if (window.__assistiaReplyLoaded && window.__assistiaReplyVersion === EXTENSION_VERSION) return;
 

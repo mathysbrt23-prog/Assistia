@@ -123,14 +123,14 @@
   justify-content: space-between;
   gap: 12px;
   margin: 14px 16px 0;
-  border: 1px solid rgba(37, 211, 102, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 16px;
-  background: rgba(37, 211, 102, 0.08);
+  background: rgba(255, 255, 255, 0.055);
   padding: 12px;
 }
 
 .assistia-kicker {
-  color: #25d366;
+  color: #fff;
   font-size: 10px;
   font-weight: 900;
   text-transform: uppercase;
@@ -213,8 +213,8 @@
 }
 
 .assistia-tone-row button.is-active {
-  border-color: rgba(37, 211, 102, 0.5);
-  background: rgba(37, 211, 102, 0.14);
+  border-color: rgba(255, 255, 255, 0.38);
+  background: rgba(255, 255, 255, 0.12);
   color: #fff;
 }
 
@@ -222,8 +222,8 @@
   height: 46px;
   border: 0;
   border-radius: 999px;
-  background: #25d366;
-  color: #031007;
+  background: #fff;
+  color: #050505;
   font: 900 13px/1 Arial, Helvetica, sans-serif;
   cursor: pointer;
 }
@@ -257,8 +257,8 @@
 .assistia-reply-output {
   min-height: 164px;
   max-height: 280px;
-  border-color: rgba(37, 211, 102, 0.28);
-  background: rgba(37, 211, 102, 0.075);
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
   padding: 12px;
 }
 

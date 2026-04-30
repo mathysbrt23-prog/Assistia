@@ -210,6 +210,10 @@ Le backend a ete simplifie autour du nouveau produit. Les modules Google Calenda
 - Passage de l'extension Chrome en version `0.3.4`.
 - Agrandissement mesure des icones de barre Chrome sans recadrage : logo complet conserve, pointe visible.
 - Passage de l'extension Chrome en version `0.3.5`.
+- Nouvel ajustement des icones de barre Chrome : symbole agrandi avec une marge minimale, sans couper la pointe.
+- Passage de l'extension Chrome en version `0.3.6`.
+- Passage landing, outil web et extension Gmail sur une direction noir/blanc : suppression de l'accent vert principal.
+- Passage de l'extension Chrome en version `0.3.7`.
 
 ## Ce qui reste a faire
 

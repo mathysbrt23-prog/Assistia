@@ -4,7 +4,7 @@ const save = document.querySelector("[data-save]");
 const dashboard = document.querySelector("[data-dashboard]");
 const openPanel = document.querySelector("[data-open]");
 const status = document.querySelector("[data-status]");
-const EXTENSION_VERSION = "0.3.5";
+const EXTENSION_VERSION = "0.3.7";
 
 function normalizeUrl(value) {
   return String(value || "http://localhost:3000").trim().replace(/\/$/, "");

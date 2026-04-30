@@ -5,13 +5,15 @@ export function Field({
   label,
   help,
   className,
+  labelClassName,
   ...props
 }: InputHTMLAttributes<HTMLInputElement> & {
   label: string;
   help?: string;
+  labelClassName?: string;
 }) {
   return (
-    <label className="grid gap-2 text-sm font-medium text-ink">
+    <label className={cn("grid gap-2 text-sm font-medium text-ink", labelClassName)}>
       <span>{label}</span>
       <input
         className={cn(

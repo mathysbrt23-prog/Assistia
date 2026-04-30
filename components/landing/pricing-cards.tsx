@@ -12,7 +12,7 @@ export function PricingCards() {
 
   async function startCheckout(plan: string) {
     if (plan === "free") {
-      window.location.href = "/tool";
+      window.location.href = "/start";
       return;
     }
     setLoadingPlan(plan);
@@ -74,8 +74,8 @@ export function PricingCards() {
             {plan.id === "free" ? "Commencer" : `Choisir ${plan.name}`}
           </Button>
           {plan.id === "free" ? (
-            <Link className="mt-3 text-center text-sm font-semibold text-moss" href="/tool">
-              Tester l’outil gratuitement
+            <Link className="mt-3 text-center text-sm font-semibold text-moss" href="/start">
+              Installer gratuitement
             </Link>
           ) : null}
         </article>

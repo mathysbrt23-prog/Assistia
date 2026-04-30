@@ -109,7 +109,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
         </h1>
         <p className="mt-2 text-sm text-zinc-600">
           {isSignup
-            ? "Crée ton compte pour tester Assistia Reply et préparer l’extension."
+            ? "Crée ton compte pour installer Assistia Reply et connecter l’extension."
             : "Retrouve ton dashboard Assistia Reply, ton usage et tes préférences."}
         </p>
       </div>

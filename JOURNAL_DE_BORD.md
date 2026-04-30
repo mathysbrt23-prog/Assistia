@@ -215,6 +215,10 @@ Le backend a ete simplifie autour du nouveau produit. Les modules Google Calenda
 - Passage landing, outil web et extension Gmail sur une direction noir/blanc : suppression de l'accent vert principal.
 - Passage de l'extension Chrome en version `0.3.7`.
 - Suppression de deux sections de la landing page : "Le vrai problème" et "Cible", pour garder une page plus directe.
+- Ajout d'un point d'entree `/start` pour le tunnel client : landing -> compte -> outil -> installation extension.
+- Reorganisation de `/tool` pour mettre l'installation/connexion de l'extension avant le test web.
+- En production, `/start` et `/tool` exigent maintenant le passage par l'inscription quand Supabase n'est pas encore configure.
+- Suppression de la partie test web de `/tool` : l'utilisateur est maintenant guide uniquement vers l'installation et la connexion de l'extension.
 
 ## Ce qui reste a faire
 

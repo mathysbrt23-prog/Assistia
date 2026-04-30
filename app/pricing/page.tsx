@@ -20,7 +20,8 @@ export default function PricingPage() {
           </h1>
           <p className="mt-4 text-zinc-700">
             Tous les plans incluent l’accès au dashboard, aux préférences de ton et au flux de
-            génération Assistia Reply. Le plan gratuit permet de tester avant de passer sur Stripe.
+            génération Assistia Reply. Le plan gratuit permet d’installer l’extension avant de passer
+            sur Stripe.
           </p>
         </div>
         <div className="mt-10">

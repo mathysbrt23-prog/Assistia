@@ -41,8 +41,10 @@ const proofPoints = [
   "Brouillons uniquement",
   "Pensé pour Gmail",
   "Extension Chrome",
-  "Essai immédiat"
+  "Installation guidée"
 ];
+
+const startHref = "/start";
 
 const features: Array<{ icon: LucideIcon; title: string; text: string }> = [
   {
@@ -107,16 +109,16 @@ const pricing = [
   {
     name: "Free",
     price: "0€",
-    description: "Pour tester la valeur en conditions réelles.",
-    items: ["20 réponses par mois", "Générateur web", "Extension locale"],
-    cta: "Commencer"
+    description: "Pour installer Assistia et l’utiliser dans Gmail.",
+    items: ["20 réponses par mois", "Extension Gmail", "Installation guidée"],
+    cta: "Installer"
   },
   {
     name: "Pro",
     price: "9€",
     description: "Pour répondre mieux et plus vite chaque semaine.",
     items: ["1 000 réponses par mois", "Extension Gmail", "Tons professionnels"],
-    cta: "Essayer Pro",
+    cta: "Installer Pro",
     featured: true
   },
   {
@@ -218,9 +220,9 @@ function Header() {
       </nav>
       <Link
         className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full bg-white px-4 text-sm font-semibold text-black transition hover:bg-zinc-200"
-        href="/tool"
+        href={startHref}
       >
-        Essayer
+        Installer
         <ArrowRight className="h-4 w-4" aria-hidden="true" />
       </Link>
     </header>
@@ -513,8 +515,8 @@ function SecuritySection() {
 function PricingSection() {
   return (
     <section className="border-t border-white/10 px-5 py-24 sm:px-8" id="prix">
-      <SectionHeading eyebrow="Prix" title="Simple à tester. Facile à rentabiliser.">
-        L’objectif du pricing est clair : faire essayer vite, puis devenir un réflexe quotidien pour
+      <SectionHeading eyebrow="Prix" title="Simple à installer. Facile à rentabiliser.">
+        L’objectif du pricing est clair : installer vite, puis devenir un réflexe quotidien pour
         les professionnels qui répondent beaucoup.
       </SectionHeading>
 
@@ -559,7 +561,7 @@ function PricingSection() {
                   ? "bg-white text-black hover:bg-zinc-200"
                   : "border border-white/10 bg-white/[0.04] text-white hover:bg-white/[0.08]"
               }`}
-              href="/tool"
+              href={startHref}
             >
               {plan.cta}
             </Link>
@@ -578,15 +580,14 @@ function FinalCTA() {
           <AssistiaLogo className="h-12 w-12" />
         </div>
         <h2 className="mx-auto max-w-3xl text-3xl font-semibold text-white sm:text-4xl">
-          Essaie Assistia sur un vrai message en moins d’une minute.
+          Installe Assistia et utilise-le directement dans Gmail.
         </h2>
         <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-zinc-400">
-          Colle un mail, écris ton intention, génère une réponse. L’extension vient ensuite quand tu
-          veux le tester directement dans Gmail.
+          Crée ton compte, connecte l’extension, ouvre Gmail. Assistia apparaît là où tu écris tes réponses.
         </p>
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-          <ButtonLink href="/tool">
-            Essayer gratuitement
+          <ButtonLink href={startHref}>
+            Installer Assistia
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </ButtonLink>
           <ButtonLink href="#demo" variant="secondary">
@@ -631,8 +632,8 @@ export default function Home() {
               brute en brouillon professionnel prêt à insérer.
             </motion.p>
             <motion.div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row" variants={reveal}>
-              <ButtonLink href="/tool">
-                Essayer gratuitement
+              <ButtonLink href={startHref}>
+                Installer gratuitement
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </ButtonLink>
               <ButtonLink href="#demo" variant="secondary">
@@ -676,8 +677,8 @@ export default function Home() {
             <span>Assistia</span>
           </div>
           <div className="flex flex-wrap gap-5">
-            <Link className="transition hover:text-white" href="/tool">
-              Essayer
+            <Link className="transition hover:text-white" href={startHref}>
+              Installer
             </Link>
             <Link className="transition hover:text-white" href="/privacy">
               Confidentialité

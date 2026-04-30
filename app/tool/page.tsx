@@ -3,7 +3,6 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { ExtensionConnectCard } from "@/components/tool/extension-connect-card";
-import { ReplyTool } from "@/components/tool/reply-tool";
 import { ButtonLink } from "@/components/ui/button";
 import { SignOutButton } from "@/components/dashboard/dashboard-actions";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
@@ -30,6 +29,10 @@ export default async function ToolPage() {
   const chromeExtensionUrl = process.env.NEXT_PUBLIC_CHROME_EXTENSION_URL || "";
   const chromeExtensionId = process.env.NEXT_PUBLIC_CHROME_EXTENSION_ID || "";
   let user = null;
+
+  if (!hasSupabaseConfig && process.env.NODE_ENV === "production") {
+    redirect("/signup?next=/tool");
+  }
 
   if (hasSupabaseConfig) {
     const supabase = await createSupabaseServerClient();
@@ -81,11 +84,11 @@ export default async function ToolPage() {
                 Assistia Reply
               </p>
               <h1 className="mt-4 max-w-3xl text-4xl font-semibold leading-tight text-white sm:text-6xl">
-                Teste l’outil, puis installe l’extension.
+                Installe Assistia dans Chrome.
               </h1>
               <p className="mt-5 max-w-2xl text-base leading-7 text-zinc-400 sm:text-lg">
-                Le parcours client doit rester court : un compte, une extension Chrome, une connexion
-                automatique, puis Assistia directement dans Gmail.
+                Le parcours client doit rester court : un compte créé, une extension Chrome connectée,
+                puis Assistia directement dans Gmail.
               </p>
             </div>
 
@@ -108,8 +111,7 @@ export default async function ToolPage() {
         </div>
       </section>
 
-      <div className="mx-auto grid max-w-7xl gap-5 px-5 py-8 sm:px-8 lg:grid-cols-[1.05fr_0.95fr]">
-        <ReplyTool />
+      <div className="mx-auto max-w-4xl px-5 py-8 sm:px-8">
         <ExtensionConnectCard
           chromeExtensionId={chromeExtensionId}
           chromeExtensionUrl={chromeExtensionUrl}
@@ -127,7 +129,7 @@ export default async function ToolPage() {
               <p className="mt-2 max-w-3xl text-sm leading-6 text-zinc-400">
                 Pour une installation en un clic côté client, il faudra publier l’extension sur le
                 Chrome Web Store et renseigner son URL + son ID dans les variables d’environnement.
-                Le fallback local reste utile pour tester avant publication.
+                En attendant, cette page guide l’installation locale de la bêta.
               </p>
               <div className="mt-4 flex flex-wrap gap-4 text-sm text-zinc-500">
                 <Link className="hover:text-white" href="/privacy">

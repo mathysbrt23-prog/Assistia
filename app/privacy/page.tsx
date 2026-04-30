@@ -87,7 +87,7 @@ export default function PrivacyPage() {
             Conditions d’utilisation
           </Link>
           <Link className="hover:text-white" href="/tool">
-            Tester Assistia
+            Installer Assistia
           </Link>
         </div>
       </div>

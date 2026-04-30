@@ -200,8 +200,8 @@ export function ExtensionConnectCard({
             </ButtonLink>
           ) : (
             <div className="rounded-xl border border-amber-400/30 bg-amber-400/10 p-3 text-sm leading-6 text-amber-100">
-              Les comptes réels nécessitent les variables Supabase. Le test web reste disponible en
-              local.
+              Les comptes réels nécessitent les variables Supabase. En local, tu peux continuer
+              l’installation de la bêta.
             </div>
           )}
         </div>

@@ -93,7 +93,7 @@ export default function TermsPage() {
             Politique de confidentialité
           </Link>
           <Link className="hover:text-white" href="/tool">
-            Tester Assistia
+            Installer Assistia
           </Link>
         </div>
       </div>

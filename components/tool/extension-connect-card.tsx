@@ -73,8 +73,8 @@ export function ExtensionConnectCard({
     setMessage(null);
 
     if (!hasSupabaseConfig) {
-      setStatus("manual");
-      setMessage("Les comptes réels seront actifs dès que Supabase sera configuré dans les variables d’environnement.");
+      setStatus("connected");
+      setMessage("Mode bêta locale prêt. Aucune clé n’est nécessaire : ouvre Gmail, puis lance Assistia depuis l’extension.");
       return;
     }
 
@@ -187,7 +187,7 @@ export function ExtensionConnectCard({
             <span className="grid h-8 w-8 place-items-center rounded-full bg-white text-sm font-bold text-black">
               2
             </span>
-            <h3 className="font-semibold text-white">Créer ton compte</h3>
+            <h3 className="font-semibold text-white">{hasSupabaseConfig ? "Créer ton compte" : "Mode bêta locale"}</h3>
           </div>
           {isAuthenticated ? (
             <div className="flex items-center gap-3 rounded-xl border border-white/20 bg-white/[0.06] p-3 text-sm text-zinc-100">
@@ -199,9 +199,9 @@ export function ExtensionConnectCard({
               Créer un compte gratuit
             </ButtonLink>
           ) : (
-            <div className="rounded-xl border border-amber-400/30 bg-amber-400/10 p-3 text-sm leading-6 text-amber-100">
-              Les comptes réels nécessitent les variables Supabase. En local, tu peux continuer
-              l’installation de la bêta.
+            <div className="rounded-xl border border-white/15 bg-white/[0.06] p-3 text-sm leading-6 text-zinc-200">
+              Aucun compte réel n’est nécessaire pour la bêta locale. L’extension utilisera
+              <span className="font-mono text-white"> http://localhost:3000</span>.
             </div>
           )}
         </div>
@@ -220,7 +220,11 @@ export function ExtensionConnectCard({
             className="w-full bg-white text-black hover:bg-zinc-200"
           >
             {status === "loading" ? <Loader2 className="h-4 w-4 animate-spin" /> : <KeyRound className="h-4 w-4" />}
-            {chromeExtensionId ? "Connecter automatiquement" : "Générer la clé de connexion"}
+            {!hasSupabaseConfig
+              ? "Activer le mode local"
+              : chromeExtensionId
+                ? "Connecter automatiquement"
+                : "Générer la clé de connexion"}
           </Button>
 
           {message ? (

@@ -219,6 +219,15 @@ Le backend a ete simplifie autour du nouveau produit. Les modules Google Calenda
 - Reorganisation de `/tool` pour mettre l'installation/connexion de l'extension avant le test web.
 - En production, `/start` et `/tool` exigent maintenant le passage par l'inscription quand Supabase n'est pas encore configure.
 - Suppression de la partie test web de `/tool` : l'utilisateur est maintenant guide uniquement vers l'installation et la connexion de l'extension.
+- Remplacement de l'erreur rouge Supabase sur l'inscription locale par un mode "installation bêta locale".
+- Ajout d'un ping extension compatible local sans clé quand Supabase n'est pas configure.
+- Configuration Supabase production sur le projet existant `mathysbrt23-prog's Project` (`qhyysrlgxocepahrjyaz`) apres blocage de creation d'un nouveau projet par la limite du plan gratuit.
+- Execution du schema `supabase/schema.sql` sur Supabase production.
+- Ajout des variables Supabase dans Vercel production et creation du fichier local `.env.local`.
+- Configuration des URLs Auth Supabase : site URL Vercel + redirections Vercel et localhost autorisees.
+- Masquage du bouton Google OAuth tant que le provider Google n'est pas configure dans Supabase.
+- Redeploiement Vercel production sur `https://assistia-reply.vercel.app`.
+- Tests production effectues : landing OK, `/start` redirige vers l'inscription, `/tool` est protege, inscription Supabase reelle OK, creation automatique du profil OK, ping extension avec cle valide OK.
 
 ## Ce qui reste a faire
 
@@ -226,9 +235,10 @@ Priorite courte :
 
 - decider officiellement si Assistia Reply devient le nouveau produit principal ;
 - valider le positionnement : "copilote de reponses professionnelles en francais pour emails et conversations client" ;
+- ajouter une vraie cle `OPENAI_API_KEY` dans Vercel et en local ;
 - tester l'API `/api/reply/generate` avec un vrai compte Supabase et une cle OpenAI ;
 - installer l'extension Chrome en local et valider l'insertion dans Gmail ;
-- generer une vraie cle extension depuis le dashboard et verifier le ping dans `extension_installations` ;
+- generer une vraie cle extension depuis le dashboard avec un compte utilisateur final et verifier le ping dans `extension_installations` ;
 - publier l'extension sur le Chrome Web Store pour remplacer l'installation locale par un vrai bouton "Ajouter a Chrome" ;
 - renseigner `NEXT_PUBLIC_CHROME_EXTENSION_URL` et `NEXT_PUBLIC_CHROME_EXTENSION_ID` pour activer le parcours client en quelques clics ;
 - creer une capture ou petite demo video du nouveau parcours landing -> dashboard -> extension ;
@@ -272,8 +282,7 @@ Tester le nouveau socle produit en conditions reelles :
 
 Prochaine etape production immediate :
 
-- creer le projet Supabase reel ;
-- executer `supabase/schema.sql` ;
-- ajouter dans Vercel `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` et `OPENAI_API_KEY` ;
+- ajouter `OPENAI_API_KEY` dans Vercel et `.env.local` ;
 - redeployer `https://assistia-reply.vercel.app` ;
-- tester inscription, connexion, generation OpenAI reelle et cle extension.
+- tester la generation OpenAI reelle dans Gmail ;
+- finaliser la fiche Chrome Web Store avec le ZIP de l'extension.

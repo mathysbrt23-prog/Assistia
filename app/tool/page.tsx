@@ -94,9 +94,13 @@ export default async function ToolPage() {
 
             <div className="grid gap-3 rounded-[28px] border border-white/10 bg-white/[0.04] p-4">
               {[
-                "Créer un compte gratuit",
+                hasSupabaseConfig ? "Créer un compte gratuit" : "Continuer en bêta locale",
                 chromeExtensionUrl ? "Ajouter depuis le Chrome Web Store" : "Installer la bêta locale",
-                chromeExtensionId ? "Connecter automatiquement l’extension" : "Générer une clé extension",
+                hasSupabaseConfig
+                  ? chromeExtensionId
+                    ? "Connecter automatiquement l’extension"
+                    : "Générer une clé extension"
+                  : "Aucune clé requise en local",
                 "Ouvrir Gmail et générer un brouillon"
               ].map((item) => (
                 <div className="flex items-center gap-3 rounded-2xl bg-black/30 p-3 text-sm text-zinc-300" key={item}>

@@ -12,6 +12,14 @@ const schema = z.object({
 
 export async function POST(request: Request) {
   try {
+    const supabaseConfigured = Boolean(
+      process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    );
+
+    if (!supabaseConfigured) {
+      return NextResponse.json({ ok: true, mode: "local-beta" });
+    }
+
     if (!request.headers.get("authorization")) {
       return unauthorizedResponse("Clé extension manquante.");
     }

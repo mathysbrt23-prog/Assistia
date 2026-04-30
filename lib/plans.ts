@@ -1,10 +1,12 @@
-export type PlanId = "free" | "pro" | "business";
+export type PlanId = "free" | "essential" | "pro";
+
+export const DAILY_QUOTA_WINDOW_MS = 24 * 60 * 60 * 1000;
 
 export const plans: Array<{
   id: PlanId;
   name: string;
   price: string;
-  monthlyReplies: number;
+  dailyReplies: number;
   description: string;
   priceEnv?: string;
   features: string[];
@@ -13,35 +15,40 @@ export const plans: Array<{
     id: "free",
     name: "Free",
     price: "0€",
-    monthlyReplies: 20,
-    description: "Pour tester Assistia sur quelques réponses.",
-    features: ["20 réponses / mois", "Extension Gmail", "Tons pro, court, chaleureux"]
+    dailyReplies: 3,
+    description: "Pour essayer Assistia sans carte bancaire.",
+    features: [
+      "3 réponses / jour",
+      "Extension Gmail",
+      "Tous les tons de réponse",
+      "Blocage 24h quand le quota est atteint"
+    ]
   },
   {
-    id: "pro",
-    name: "Pro",
-    price: "9€",
-    monthlyReplies: 1000,
-    description: "Pour répondre vite et bien tous les jours.",
-    priceEnv: "STRIPE_PRICE_PRO",
+    id: "essential",
+    name: "Essential",
+    price: "4,99€",
+    dailyReplies: 40,
+    description: "Pour les indépendants qui répondent tous les jours.",
+    priceEnv: "STRIPE_PRICE_ESSENTIAL",
     features: [
-      "1 000 réponses / mois",
+      "40 réponses / jour",
       "Extension Gmail",
       "Templates relance, prix, refus, SAV",
       "Préférences de ton"
     ]
   },
   {
-    id: "business",
-    name: "Team",
-    price: "29€",
-    monthlyReplies: 3000,
-    description: "Pour les petites équipes qui répondent aux clients.",
-    priceEnv: "STRIPE_PRICE_BUSINESS",
+    id: "pro",
+    name: "Pro",
+    price: "19,99€",
+    dailyReplies: 200,
+    description: "Pour les profils sales, fondateurs et équipes en volume.",
+    priceEnv: "STRIPE_PRICE_PRO",
     features: [
-      "3 000 réponses / mois",
-      "3 utilisateurs inclus",
-      "Ton de marque partagé",
+      "200 réponses / jour",
+      "Extension Gmail",
+      "Templates relance, prix, refus, SAV",
       "Historique d’usage sans contenu sensible"
     ]
   }
@@ -71,4 +78,13 @@ export function getPlanFromStripePrice(priceId?: string | null) {
 
 export function isActiveSubscriptionStatus(status?: string | null) {
   return status === "active" || status === "trialing";
+}
+
+export function rollingQuotaWindowStartIso(now = new Date()) {
+  return new Date(now.getTime() - DAILY_QUOTA_WINDOW_MS).toISOString();
+}
+
+export function nextQuotaResetIso(oldestUsageIso?: string | null, now = new Date()) {
+  if (!oldestUsageIso) return new Date(now.getTime() + DAILY_QUOTA_WINDOW_MS).toISOString();
+  return new Date(new Date(oldestUsageIso).getTime() + DAILY_QUOTA_WINDOW_MS).toISOString();
 }

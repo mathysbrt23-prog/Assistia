@@ -19,7 +19,13 @@ import {
   SignOutButton,
   StripePlanButtons
 } from "@/components/dashboard/dashboard-actions";
-import { getEffectivePlan, getPlan, isActiveSubscriptionStatus } from "@/lib/plans";
+import {
+  getEffectivePlan,
+  getPlan,
+  isActiveSubscriptionStatus,
+  nextQuotaResetIso,
+  rollingQuotaWindowStartIso
+} from "@/lib/plans";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { compactText, formatDateTime } from "@/lib/utils";
 
@@ -142,14 +148,13 @@ export default async function DashboardPage() {
     full_name: user.user_metadata?.full_name || user.user_metadata?.name || null
   });
 
-  const monthStart = new Date();
-  monthStart.setUTCDate(1);
-  monthStart.setUTCHours(0, 0, 0, 0);
+  const quotaWindowStart = rollingQuotaWindowStartIso();
 
   const [
     profileResult,
     subscriptionResult,
     usageResult,
+    oldestUsageResult,
     recentRepliesResult,
     extensionResult,
     logsResult
@@ -166,7 +171,15 @@ export default async function DashboardPage() {
       .from("reply_requests")
       .select("id", { count: "exact", head: true })
       .eq("user_id", user.id)
-      .gte("created_at", monthStart.toISOString()),
+      .gte("created_at", quotaWindowStart),
+    supabase
+      .from("reply_requests")
+      .select("created_at")
+      .eq("user_id", user.id)
+      .gte("created_at", quotaWindowStart)
+      .order("created_at", { ascending: true })
+      .limit(1)
+      .maybeSingle(),
     supabase
       .from("reply_requests")
       .select("*")
@@ -199,7 +212,8 @@ export default async function DashboardPage() {
   const plan = getEffectivePlan(subscriptionPlan, hasActiveSubscription);
   const paidPlan = getPlan(subscriptionPlan);
   const usageCount = usageResult.count || 0;
-  const remaining = Math.max(0, plan.monthlyReplies - usageCount);
+  const remaining = Math.max(0, plan.dailyReplies - usageCount);
+  const resetAt = usageCount > 0 ? nextQuotaResetIso(asString(oldestUsageResult.data?.created_at)) : null;
 
   return (
     <main className="min-h-screen bg-fog text-ink">
@@ -256,15 +270,20 @@ export default async function DashboardPage() {
           <section className="grid gap-4 md:grid-cols-3">
             <div className="rounded-lg border border-line bg-white p-5 shadow-sm">
               <MessageSquareText className="h-6 w-6 text-moss" />
-              <p className="mt-4 text-sm text-zinc-600">Réponses ce mois-ci</p>
+              <p className="mt-4 text-sm text-zinc-600">Réponses sur 24h</p>
               <p className="mt-1 text-2xl font-bold">
-                {usageCount} / {plan.monthlyReplies}
+                {usageCount} / {plan.dailyReplies}
               </p>
             </div>
             <div className="rounded-lg border border-line bg-white p-5 shadow-sm">
               <CreditCard className="h-6 w-6 text-moss" />
               <p className="mt-4 text-sm text-zinc-600">Réponses restantes</p>
               <p className="mt-1 text-2xl font-bold">{remaining}</p>
+              {resetAt ? (
+                <p className="mt-2 text-xs leading-5 text-zinc-500">
+                  Premier reset : {formatDateTime(resetAt)}
+                </p>
+              ) : null}
             </div>
             <div className="rounded-lg border border-line bg-white p-5 shadow-sm">
               <Chrome className="h-6 w-6 text-moss" />

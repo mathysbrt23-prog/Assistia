@@ -2,7 +2,12 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { ApiAuthError, requireApiUser, unauthorizedResponse } from "@/lib/auth";
 import { getOpenAI, getOpenAIModel } from "@/lib/openai";
-import { getEffectivePlan, isActiveSubscriptionStatus } from "@/lib/plans";
+import {
+  getEffectivePlan,
+  isActiveSubscriptionStatus,
+  nextQuotaResetIso,
+  rollingQuotaWindowStartIso
+} from "@/lib/plans";
 import { compactText } from "@/lib/utils";
 
 export const runtime = "nodejs";
@@ -16,13 +21,6 @@ const schema = z.object({
   tone: z.enum(["professionnel", "court", "chaleureux", "ferme", "commercial"]).optional(),
   language: z.enum(["fr", "en", "es"]).optional()
 });
-
-function monthStartIso() {
-  const now = new Date();
-  now.setUTCDate(1);
-  now.setUTCHours(0, 0, 0, 0);
-  return now.toISOString();
-}
 
 function buildPrompt(input: z.infer<typeof schema>, tone: string, language: string) {
   const languageLabel = language === "en" ? "anglais" : language === "es" ? "espagnol" : "français";
@@ -127,8 +125,10 @@ export async function POST(request: Request) {
         reply,
         usage: {
           used: 1,
-          limit: 20,
-          remaining: 19
+          limit: 3,
+          remaining: 2,
+          resetAt: nextQuotaResetIso(),
+          window: "24h"
         },
         metadata: {
           model,
@@ -138,8 +138,9 @@ export async function POST(request: Request) {
     }
 
     const { supabase, user, authMethod, extensionId } = await requireApiUser(request);
+    const quotaWindowStart = rollingQuotaWindowStartIso();
 
-    const [{ data: profile }, { data: subscription }, usageResult] = await Promise.all([
+    const [{ data: profile }, { data: subscription }, usageResult, oldestUsageResult] = await Promise.all([
       supabase
         .from("users_profiles")
         .select("default_tone,default_language")
@@ -156,17 +157,33 @@ export async function POST(request: Request) {
         .from("reply_requests")
         .select("id", { count: "exact", head: true })
         .eq("user_id", user.id)
-        .gte("created_at", monthStartIso())
+        .gte("created_at", quotaWindowStart),
+      supabase
+        .from("reply_requests")
+        .select("created_at")
+        .eq("user_id", user.id)
+        .gte("created_at", quotaWindowStart)
+        .order("created_at", { ascending: true })
+        .limit(1)
+        .maybeSingle()
     ]);
 
     const active = isActiveSubscriptionStatus(subscription?.status as string | null | undefined);
     const plan = getEffectivePlan(subscription?.plan as string | null | undefined, active);
     const used = usageResult.count || 0;
+    const resetAt = nextQuotaResetIso(oldestUsageResult.data?.created_at as string | null | undefined);
 
-    if (used >= plan.monthlyReplies) {
+    if (used >= plan.dailyReplies) {
       return NextResponse.json(
         {
-          error: `Limite atteinte : ${plan.monthlyReplies} réponses incluses dans le plan ${plan.name}.`
+          error: `Quota atteint : ${plan.dailyReplies} réponses disponibles sur 24h avec le plan ${plan.name}.`,
+          usage: {
+            used,
+            limit: plan.dailyReplies,
+            remaining: 0,
+            resetAt,
+            window: "24h"
+          }
         },
         { status: 402 }
       );
@@ -220,8 +237,10 @@ export async function POST(request: Request) {
       reply,
       usage: {
         used: used + 1,
-        limit: plan.monthlyReplies,
-        remaining: Math.max(0, plan.monthlyReplies - used - 1)
+        limit: plan.dailyReplies,
+        remaining: Math.max(0, plan.dailyReplies - used - 1),
+        resetAt,
+        window: "24h"
       }
     });
   } catch (error) {

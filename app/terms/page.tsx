@@ -45,8 +45,8 @@ const sections = [
   {
     title: "6. Abonnements et quotas",
     content: [
-      "Assistia peut appliquer des limites d’usage selon le plan choisi. Les plans payants et la facturation Stripe seront activés dans une étape ultérieure.",
-      "Les quotas peuvent être modifiés pour protéger la stabilité du service et éviter les abus."
+      "Assistia applique des limites d’usage selon le plan choisi : Free inclut 3 réponses par jour, Essential 40 réponses par jour et Pro 200 réponses par jour.",
+      "Quand le quota est atteint, la génération est bloquée jusqu’à la prochaine fenêtre de 24 heures. Les quotas peuvent être modifiés pour protéger la stabilité du service et éviter les abus."
     ]
   },
   {

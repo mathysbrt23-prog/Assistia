@@ -228,6 +228,15 @@ Le backend a ete simplifie autour du nouveau produit. Les modules Google Calenda
 - Masquage du bouton Google OAuth tant que le provider Google n'est pas configure dans Supabase.
 - Redeploiement Vercel production sur `https://assistia-reply.vercel.app`.
 - Tests production effectues : landing OK, `/start` redirige vers l'inscription, `/tool` est protege, inscription Supabase reelle OK, creation automatique du profil OK, ping extension avec cle valide OK.
+- Alignement des offres v1 sur des quotas quotidiens : Free 0 € avec 3 réponses/jour, Essential 4,99 € avec 40 réponses/jour, Pro 19,99 € avec 200 réponses/jour.
+- Passage du backend de quotas mensuels à une fenêtre glissante de 24h dans `/api/reply/generate`.
+- Mise à jour du dashboard : usage sur 24h, réponses restantes et heure du premier reset.
+- Mise à jour Stripe côté code : plans `essential` et `pro`, variables `STRIPE_PRICE_ESSENTIAL` et `STRIPE_PRICE_PRO`.
+- Mise à jour de `supabase/schema.sql`, `.env.example`, `README.md`, `docs/v1-production-runbook.md`, conditions d’utilisation et rapport concurrence produit.
+- Vérifications réussies : `pnpm lint`, `pnpm check:prod`, `pnpm build`.
+- Redéploiement Vercel production réussi sur `https://assistia-reply.vercel.app`.
+- Test production après déploiement : `/` OK, `/start` redirige vers `/signup?next=/tool`, `/terms` OK.
+- Tentative d’application du SQL Supabase depuis le terminal : échec car le mot de passe DB local stocké n’est plus accepté.
 
 ## Ce qui reste a faire
 
@@ -237,12 +246,13 @@ Priorite courte :
 - valider le positionnement : "copilote de reponses professionnelles en francais pour emails et conversations client" ;
 - ajouter une vraie cle `OPENAI_API_KEY` dans Vercel et en local ;
 - tester l'API `/api/reply/generate` avec un vrai compte Supabase et une cle OpenAI ;
+- appliquer la dernière version de `supabase/schema.sql` sur Supabase production, ou redonner un accès Supabase valide pour que Codex l’exécute ;
 - installer l'extension Chrome en local et valider l'insertion dans Gmail ;
 - generer une vraie cle extension depuis le dashboard avec un compte utilisateur final et verifier le ping dans `extension_installations` ;
 - publier l'extension sur le Chrome Web Store pour remplacer l'installation locale par un vrai bouton "Ajouter a Chrome" ;
 - renseigner `NEXT_PUBLIC_CHROME_EXTENSION_URL` et `NEXT_PUBLIC_CHROME_EXTENSION_ID` pour activer le parcours client en quelques clics ;
 - creer une capture ou petite demo video du nouveau parcours landing -> dashboard -> extension ;
-- brancher Stripe live et finaliser les offres payantes quand on reprendra la partie paiement ;
+- brancher Stripe live avec les offres Essential 4,99 €/mois et Pro 19,99 €/mois quand on reprendra la partie paiement ;
 - creer les assets Chrome Store : icones, screenshots, visuels et description finale.
 
 MVP technique :

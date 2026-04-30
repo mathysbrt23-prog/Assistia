@@ -488,15 +488,15 @@ Pricing conseille pour Assistia MVP :
 
 | Plan | Prix | Contenu |
 | --- | --- | --- |
-| Free | 0 €/mois | 20 reponses/mois, Gmail ou WhatsApp Web, 3 tons |
-| Pro | 9 €/mois | 500-1000 reponses/mois, Gmail + WhatsApp Web + LinkedIn, tons avances, templates metiers |
-| Business | 29 €/mois | 3 utilisateurs, templates partages, ton de marque, historique d'usage sans contenu sensible |
+| Free | 0 €/mois | 3 reponses/jour, Gmail, tous les tons, blocage 24h quand le quota est atteint |
+| Essential | 4,99 €/mois | 40 reponses/jour, Gmail, templates metiers, preferences de ton |
+| Pro | 19,99 €/mois | 200 reponses/jour, Gmail, usage intensif sales/support, historique d'usage sans contenu sensible |
 
 Pourquoi :
 
-- 9 €/mois est assez bas pour achat impulsif ;
-- 29 €/mois reste acceptable pour petite equipe ;
-- ne pas commencer trop haut tant que la differenciation n'est pas prouvee.
+- 4,99 €/mois garde un achat impulsif face aux extensions simples ;
+- 19,99 €/mois reste coherent avec les assistants email pro plus complets ;
+- les quotas quotidiens sont plus lisibles que des quotas mensuels et limitent mieux les abus.
 
 ## MVP recommande apres cette veille
 

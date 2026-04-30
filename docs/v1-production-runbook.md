@@ -10,7 +10,8 @@ Mettre en ligne la v1 Gmail-only avec une URL Vercel temporaire, Supabase réel,
 - URL production temporaire : `https://assistia-reply.vercel.app`
 - Dernier deploiement production : pret
 - Pages testees en production : `/`, `/tool`, `/privacy`, `/terms`
-- API `/api/reply/generate` : fonctionnelle en mode demo local tant que Supabase/OpenAI ne sont pas configures
+- Supabase : configure sur le projet de production actuel
+- API `/api/reply/generate` : fonctionnelle avec comptes reels ; repasse en brouillon demo si `OPENAI_API_KEY` manque
 
 Variables deja ajoutees dans Vercel :
 
@@ -18,6 +19,7 @@ Variables deja ajoutees dans Vercel :
 APP_URL=https://assistia-reply.vercel.app
 OPENAI_MODEL=gpt-4o-mini
 NEXT_PUBLIC_SUPPORT_EMAIL=contact@assistia.ai
+NEXT_PUBLIC_GOOGLE_AUTH_ENABLED=false
 ```
 
 ## Variables Vercel obligatoires
@@ -45,18 +47,23 @@ Variables Stripe à laisser vides tant que le paiement est reporté :
 STRIPE_SECRET_KEY=
 STRIPE_WEBHOOK_SECRET=
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
+STRIPE_PRICE_ESSENTIAL=
 STRIPE_PRICE_PRO=
-STRIPE_PRICE_BUSINESS=
 ```
+
+Plans v1 prévus :
+
+- Free : 0 €, 3 réponses / jour, blocage 24h quand le quota est atteint
+- Essential : 4,99 €/mois, 40 réponses / jour
+- Pro : 19,99 €/mois, 200 réponses / jour
 
 ## Supabase
 
-1. Créer un projet Supabase.
-2. Exécuter `supabase/schema.sql` dans SQL Editor.
-3. Activer Email/Password dans Auth.
-4. Pour la bêta, désactiver la confirmation email ou utiliser Google OAuth.
-5. Ajouter l’URL de callback : `https://<url-vercel>/auth/callback`.
-6. Copier les clés dans Vercel.
+1. Vérifier que `supabase/schema.sql` est bien appliqué.
+2. Activer Email/Password dans Auth.
+3. Pour la bêta, désactiver la confirmation email ou utiliser Google OAuth.
+4. Ajouter l’URL de callback : `https://<url-vercel>/auth/callback`.
+5. Copier les clés dans Vercel si le projet change.
 
 ## OpenAI
 

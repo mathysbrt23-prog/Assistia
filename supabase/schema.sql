@@ -28,7 +28,7 @@ create table if not exists public.users_profiles (
 create table if not exists public.subscriptions (
   id uuid primary key default gen_random_uuid(),
   user_id uuid not null references auth.users(id) on delete cascade,
-  plan text check (plan in ('pro', 'business')),
+  plan text check (plan in ('essential', 'pro')),
   status text not null default 'incomplete',
   stripe_customer_id text,
   stripe_subscription_id text unique,
@@ -39,6 +39,13 @@ create table if not exists public.subscriptions (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+alter table public.subscriptions
+  drop constraint if exists subscriptions_plan_check;
+
+alter table public.subscriptions
+  add constraint subscriptions_plan_check
+  check (plan in ('essential', 'pro'));
 
 create table if not exists public.reply_requests (
   id uuid primary key default gen_random_uuid(),
@@ -111,7 +118,8 @@ alter table public.extension_installations
 create index if not exists subscriptions_user_id_idx on public.subscriptions(user_id);
 create index if not exists subscriptions_status_idx on public.subscriptions(status);
 create index if not exists reply_requests_user_created_idx on public.reply_requests(user_id, created_at desc);
-create index if not exists reply_requests_user_month_idx on public.reply_requests(user_id, created_at);
+drop index if exists reply_requests_user_month_idx;
+create index if not exists reply_requests_user_usage_idx on public.reply_requests(user_id, created_at);
 create index if not exists usage_events_user_created_idx on public.usage_events(user_id, created_at desc);
 create index if not exists reply_templates_user_idx on public.reply_templates(user_id, category);
 create unique index if not exists reply_templates_shared_unique_idx

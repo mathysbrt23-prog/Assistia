@@ -46,7 +46,7 @@ export function PricingCards() {
               <h3 className="text-xl font-bold text-ink">{plan.name}</h3>
               <p className="mt-1 text-sm text-zinc-600">{plan.description}</p>
             </div>
-            {plan.id === "pro" ? (
+            {plan.id === "essential" ? (
               <span className="rounded-full bg-mint px-3 py-1 text-xs font-bold text-moss">
                 Populaire
               </span>
@@ -68,7 +68,7 @@ export function PricingCards() {
             className="mt-7 w-full"
             onClick={() => startCheckout(plan.id)}
             disabled={loadingPlan !== null}
-            variant={plan.id === "pro" ? "primary" : "secondary"}
+            variant={plan.id === "essential" ? "primary" : "secondary"}
           >
             {loadingPlan === plan.id ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
             {plan.id === "free" ? "Commencer" : `Choisir ${plan.name}`}

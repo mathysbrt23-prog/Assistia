@@ -16,11 +16,11 @@ Le produit ne remplace pas les apps de messagerie. Il ajoute un copilote discret
 ## Fonctionnalités actuelles
 
 - Landing page premium dark pour Assistia Reply
-- Page `/tool` reliée aux CTA de la landing : test web + installation extension
+- Page `/tool` reliée aux CTA de la landing : installation et connexion de l’extension
 - Inscription / connexion email-password et Google via Supabase Auth
 - Dashboard utilisateur
 - Préférences de réponse : ton, langue, rétention
-- Plans Free, Pro et Team en préparation
+- Plans Free, Essential et Pro en préparation
 - Stripe Checkout + webhook abonnement
 - API `/api/reply/generate` pour générer ou reformuler une réponse
 - Connexion extension via clé générée depuis le dashboard ou connexion automatique depuis `/tool`
@@ -76,8 +76,8 @@ les colonnes nécessaires à la connexion extension (`install_token_hash`, `toke
 
 Crée deux produits récurrents :
 
-- Pro — 9 €/mois
-- Team — 29 €/mois
+- Essential — 4,99 €/mois, 40 réponses / jour
+- Pro — 19,99 €/mois, 200 réponses / jour
 
 Renseigne ensuite :
 
@@ -85,8 +85,8 @@ Renseigne ensuite :
 STRIPE_SECRET_KEY=
 STRIPE_WEBHOOK_SECRET=
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
+STRIPE_PRICE_ESSENTIAL=
 STRIPE_PRICE_PRO=
-STRIPE_PRICE_BUSINESS=
 ```
 
 Webhook Stripe local :
@@ -139,8 +139,10 @@ Réponse :
   "reply": "Bonjour, je comprends totalement votre point...",
   "usage": {
     "used": 1,
-    "limit": 20,
-    "remaining": 19
+    "limit": 3,
+    "remaining": 2,
+    "resetAt": "2026-05-01T12:00:00.000Z",
+    "window": "24h"
   }
 }
 ```
@@ -183,14 +185,13 @@ Préparation Chrome Store :
 
 1. Lance `pnpm dev`.
 2. Clique sur “Essayer gratuitement” depuis la landing, ou va sur `/tool`.
-3. Crée un compte si Supabase est configuré. Sans Supabase, `/tool` passe en mode local de démonstration.
-4. Teste une réponse directement dans l’outil web.
-5. Ajoute l’extension via le Chrome Web Store si elle est publiée, sinon charge le dossier local.
-6. Clique sur “Connecter automatiquement” si `NEXT_PUBLIC_CHROME_EXTENSION_ID` est configuré.
-7. Si la connexion automatique n’est pas disponible, copie la clé affichée dans le popup Assistia.
-8. Ouvre un mail dans Gmail, clique sur Assistia, écris ton idée de réponse et génère.
-9. Clique sur “Insérer dans Gmail” pour ajouter le brouillon sans envoi automatique.
-10. Vérifie que la ligne apparaît dans `reply_requests`.
+3. Crée un compte si Supabase est configuré. Sans Supabase, `/tool` passe en mode installation bêta locale.
+4. Ajoute l’extension via le Chrome Web Store si elle est publiée, sinon charge le dossier local.
+5. Clique sur “Connecter automatiquement” si `NEXT_PUBLIC_CHROME_EXTENSION_ID` est configuré.
+6. Si la connexion automatique n’est pas disponible, copie la clé affichée dans le popup Assistia.
+7. Ouvre un mail dans Gmail, clique sur Assistia, écris ton idée de réponse et génère.
+8. Clique sur “Insérer dans Gmail” pour ajouter le brouillon sans envoi automatique.
+9. Vérifie que la ligne apparaît dans `reply_requests`.
 
 ## 7. MVP extension Chrome
 
@@ -228,7 +229,7 @@ Ordre d’amélioration après v1 :
 - Pas de Gmail API au MVP.
 - L’extension lit uniquement le texte visible ou sélectionné.
 - L’historique stocke un aperçu court et le brouillon généré.
-- Les quotas empêchent les usages abusifs par plan.
+- Les quotas empêchent les usages abusifs par plan : 3 réponses / jour en Free, 40 en Essential, 200 en Pro, avec une fenêtre glissante de 24h.
 
 ## Documents projet
 
